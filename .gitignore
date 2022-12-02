@@ -1,0 +1,9 @@
+# folders to ignore
+.vscode/
+_exempelfiler/
+build/
+
+#files to ignore
+include/Constants.h
+Makefile.in
+Makefile
