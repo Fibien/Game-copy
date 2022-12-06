@@ -9,10 +9,10 @@ void testMethod(){
 
     std::string default_path = (constants::gResPath + "/images/gul.bmp");
 
-    //Test System ctr
-     System sys; // ✅
-    // System sys(800, 600); 
-    //System sys(800, 600, "Game", default_path);
+    // Test System ctr
+    // System sys; // 🗸
+    // System sys(800, 600); // 🗸
+    //System sys(800, 600, "Game", default_path); // 🗸
 
 
 }

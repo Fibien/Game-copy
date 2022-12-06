@@ -6,10 +6,10 @@ Session::Session(int x, int y, std::string name, std::string path) : sys_(x,y,na
 void Session::run(){
 
     bool quit = false;
-    Uint32 tickInterval = 1000 / FPS;
+    Uint32 tick_interval = 1000 / FPS;
     while(!quit){
     
-        Uint32 nextTick = SDL_GetTicks() + tickInterval;
+        Uint32 next_tick = SDL_GetTicks() + tick_interval;
         SDL_Event event;
         while(SDL_PollEvent(&event)){
         
