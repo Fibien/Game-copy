@@ -1,7 +1,7 @@
 ﻿#define FPS 60
 #include <Session.h>
 
-Session::Session(int x, int y, std::string name, std::string path) : sys(x,y,name, path){}
+Session::Session(int x, int y, std::string name, std::string path) : sys_(x,y,name, path){}
 
 void Session::run(){
 
@@ -37,7 +37,7 @@ void Session::run(){
 }
 
 void Session::add(Sprite& sprite){
-    vec.push_back(sprite);
+    vec_.push_back(sprite);
 }
 
 void Session::remove(Sprite& sprite){

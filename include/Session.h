@@ -20,10 +20,10 @@ class Session{
     // Add defeat msgs
 
     private:
-
+    
     void removeElement(std::vector<Sprite>&, Sprite);
-    System sys;
-    std::vector<Sprite> vec;
+    System sys_;
+    std::vector<Sprite> vec_;
 
 };
 
