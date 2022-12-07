@@ -15,18 +15,31 @@ void Session::run(){
         
             switch(event.type){
             
+                // Lägga till paus func senare
+
                 case SDL_QUIT: quit = true; break;
-            
-            
+                // SDL_KEYDOWN 
+                // Anropar Player via dess pekare (Player ligger i Sprite samlingen)
+                // Player anropar den tänkta knappe, övriga sprites anropas ej
+
+                // SDL_Keydown, samma för player anropar skjutfunktionen i player    
             
             }
         
-        
-        
         }
 
+         // Tick för sprites
 
-    
+        // Lägga till element (och HUD?)
+
+        // Ta bort element (och HUD?)
+
+        // Draw, ritar ut alla objekt, obs på HUD och sprite samling
+
+        // FPS delay
+        //if(delay > 0){
+        // fortsätt vänta
+        //}    
     
     }
 
@@ -37,10 +50,12 @@ void Session::run(){
 }
 
 void Session::add(Sprite& sprite){
-    vec_.push_back(sprite);
+    // Ändra till added vectorn, minskar kodduplicering. 
+    sprite_.push_back(sprite);
 }
 
 void Session::remove(Sprite& sprite){
+    // Tänk mer, interaktion med remove vektorn?
     //vec.erase();
 }
 
