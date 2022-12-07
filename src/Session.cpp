@@ -15,7 +15,7 @@ void Session::run(){
         
             switch(event.type){
             
-                case SDL_QUIT: quit = true;
+                case SDL_QUIT: quit = true; break;
             
             
             
