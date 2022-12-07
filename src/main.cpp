@@ -3,7 +3,7 @@
 #include <Constants.h>
 #include <string>
 
-//Session ses(800, 600, "game", "./resources/images/gul.bmp");
+
 
 void testMethod(){
 
@@ -13,6 +13,9 @@ void testMethod(){
     // System sys; // 🗸
     // System sys(800, 600); // 🗸
     //System sys(800, 600, "Game", default_path); // 🗸
+
+    Session ses(800, 600, "game", "./resources/images/gul.bmp");
+    ses.run();
 
 
 }
