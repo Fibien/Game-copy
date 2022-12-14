@@ -3,3 +3,5 @@
 Sprite::Sprite(){
 
 }
+
+void Sprite::keyDown(){}
