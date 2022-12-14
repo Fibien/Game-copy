@@ -3,6 +3,9 @@
 
 class Sprite{
 
+    Sprite(int, int, int, int, std::string);
+    Sprite();
+
 };
 
 #endif

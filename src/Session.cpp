@@ -1,6 +1,8 @@
 ﻿#define FPS 60
-#include <Session.h>
+#include "Session.h"
+#include "Sprite.h"
 
+// Skapa default varianter, flytta konstanter från system
 Session::Session(int x, int y, std::string name, std::string path) : sys_(x,y,name, path){}
 
 void Session::run(){
@@ -49,10 +51,16 @@ void Session::run(){
 
 }
 
-void Session::add(Sprite& sprite){
+void Session::addSprite(Sprite& sprite){
     // Ändra till added vectorn, minskar kodduplicering. 
-    sprite_.push_back(sprite);
+    added.push_back(sprite);
 }
+
+void Session::addPlayer(Sprite *player){
+    players_.push_back(player);
+    addSprite(*player);
+}
+
 
 void Session::remove(Sprite& sprite){
     // Tänk mer, interaktion med remove vektorn?

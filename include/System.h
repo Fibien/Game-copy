@@ -15,7 +15,7 @@ class System{
     SDL_Renderer* getRenderer(); 
 
     private:
-    const static std::string default_path_;
+    const static std::string default_background_;
     const static std::string default_title_;
     const static int default_height_;
     const static int default_width_;
