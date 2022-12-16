@@ -24,5 +24,6 @@ class System{
     SDL_Renderer *ren_;
 };
 
+extern System syst_;
 
 #endif

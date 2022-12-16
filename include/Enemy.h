@@ -1,7 +1,11 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-class Enemy {
+#include "Sprite.h"
+
+class Enemy : public Sprite {
+
+
 
 };
 

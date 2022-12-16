@@ -15,10 +15,11 @@ class Session{
     Session(int, int, std::string, std::string);
     //Session(std::unordered_map<SDL_Event,int> test );
     void run();
-    void addSprite(Sprite&);
+    void addSprite(Sprite*);
     void addPlayer(Sprite*);
-    void addHUD(HUD&);
-    void remove(Sprite&);
+    void addHUD(HUD*);
+    void remove(Sprite*);
+
     // Victory func
     // defeat func
     // collision  
@@ -28,16 +29,16 @@ class Session{
     // Add defeat msgs
 
     private:
-    
+    bool is_session_running_;
     //void removeElement(std::vector<Sprite>&, Sprite);
-    System sys_;
+    // System sys_;
     // Deklarera en samling för objekt som ska läggas till och för objekt som tag bort
 
-    std::vector<Sprite> sprites;
+    std::vector<Sprite*> sprites;
     std::vector<Sprite*> players_;
-    std::vector<HUD> HUDs_;
-    std::vector<Sprite> added;
-    std::vector<Sprite> removed;
+    std::vector<HUD*> HUDs_;
+    std::vector<Sprite*> added;
+    std::vector<Sprite*> removed;
     
    
 };

@@ -8,7 +8,7 @@
 
 void testMethod(){
 
- 
+    Player* p = Player::getInstance(100,100,100,100, "Player.png");
 
     // Test System ctr
     // System sys; // 🗸
@@ -18,6 +18,7 @@ void testMethod(){
 
     //Session ses(800, 600, "game", "./images/gul.bmp");
     Session ses(800, 600, "game", "./images/Background.jpg");
+    ses.addPlayer(p);
     //ses.addPlayer
     ses.run();
 
@@ -28,6 +29,8 @@ void testMethod(){
 int main(int argc, char** argv){
 
     testMethod();
+
+    
 
     return 0;
 }

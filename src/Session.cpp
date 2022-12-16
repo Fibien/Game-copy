@@ -1,15 +1,16 @@
-﻿#include "Session.h"
+﻿#include <algorithm>
+#include <stdexcept>
+#include "Session.h"
 #include "Sprite.h"
-#include <algorithm>
 #include "Player.h"
 #define FPS 60
 //#include "Pl"
 
 // Skapa default varianter, flytta konstanter från system
-Session::Session(int x, int y, std::string name, std::string path) : sys_(x,y,name, path){}
+Session::Session(int x, int y, std::string name, std::string path) {}
 
 void Session::run(){
-
+    is_session_running_ = true;
     bool quit = false;
     Uint32 tick_interval = 1000 / FPS;
     while(!quit){
@@ -22,7 +23,7 @@ void Session::run(){
             
                 // Lägga till paus func senare
                 case SDL_KEYUP: {
-                    //for_each(players_.begin(), players_.end(), [&event](Sprite& sprite)->void{sprite.keyDown(event);});                 
+                    //for_each(players_.begin(), players_.end(), [&event](Player player)->void{player.keyDown(event);});                 
                     // itererar igenom lista och anropar keyup på varje element
                 break;
                 }
@@ -45,14 +46,21 @@ void Session::run(){
         }
 
          // Tick för sprites
-        //for (auto sprite : sprites) 
-          //  sprite.tick();
+        for (Sprite *sprite : sprites) 
+           sprite->tick();
         // Lägga till element (och HUD?)
-
+        for (Sprite *sprite : added)
+            sprites.push_back(sprite);   
+        added.clear();
         // Ta bort element (och HUD?)
 
         // Draw, ritar ut alla objekt, obs på HUD och sprite samling
+        SDL_RenderClear(syst_.getRenderer());
+        
+        for (Sprite *sprite : sprites)
+            sprite->draw();
 
+        SDL_RenderPresent(syst_.getRenderer());
         // FPS delay
         int delay = next_tick - SDL_GetTicks();
         if (delay > 0) {
@@ -61,17 +69,25 @@ void Session::run(){
     } // outer while
 }
 
-void Session::addSprite(Sprite& sprite){
+void Session::addSprite(Sprite* sprite){
     // Ändra till added vectorn, minskar kodduplicering. 
     added.push_back(sprite);
 }
 
 // Kolla om de pekar på samma obj
 void Session::addPlayer(Sprite *player){
+    if(is_session_running_){
+        throw std::invalid_argument("Players can't be added during runtime");
+    }
     players_.push_back(player);
-    addSprite(*player);
 }
 
+void Session::addHUD(HUD* hud){
+     if(is_session_running_){
+        throw std::invalid_argument("HUDs can't be added during runtime");
+    }
+    HUDs_.push_back(hud);
+}
 
 void Session::remove(Sprite& sprite){
     // Tänk mer, interaktion med remove vektorn?
