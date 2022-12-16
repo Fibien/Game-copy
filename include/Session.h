@@ -43,5 +43,7 @@ class Session{
    
 };
 
+extern System syst_;
+
 
 #endif

@@ -8,12 +8,11 @@
 //#include "Pl"
 
 // Skapa default varianter, flytta konstanter från system
-Session::Session(int x, int y, std::string title, std::string path) {
-    //System::syst_(x,y,title,path);
+Session::Session(int x, int y, std::string title, std::string path)  {
+    //syst_{x,y,title,path}
 }
 
 void Session::run(){
-
     
     is_session_running_ = true;
     bool quit = false;
