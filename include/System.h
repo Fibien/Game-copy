@@ -13,7 +13,8 @@ class System{
     System(int, int);
     System(int, int, std::string, std::string);
     ~System();
-    SDL_Renderer* getRenderer(); 
+    SDL_Renderer* getRenderer() {return ren_;}; 
+    SDL_Texture* getTexture() {return txt_;};
 
     private:
     const static std::string default_background_;
@@ -22,8 +23,9 @@ class System{
     const static int default_width_;
     SDL_Window *window_;
     SDL_Renderer *ren_;
+    SDL_Texture* txt_;
 };
 
-//extern System syst_;
+extern System syst_;
 
 #endif

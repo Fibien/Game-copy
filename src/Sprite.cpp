@@ -11,7 +11,7 @@ Sprite::Sprite(int x, int y, int height, int width, std::string path){
     this->y = y;
     this->height = height;
     this->width = width;
-    //texture_ = IMG_LoadTexture(syst_.getRenderer(), (constants::gResPath + path).c_str());
+    texture_ = IMG_LoadTexture(syst_.getRenderer(), (constants::gResPath + path).c_str());
 };
 
 

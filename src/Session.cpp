@@ -7,7 +7,9 @@
 //#include "Pl"
 
 // Skapa default varianter, flytta konstanter från system
-Session::Session(int x, int y, std::string name, std::string path) : sys_(){}
+Session::Session(int x, int y, std::string name, std::string path) {
+
+}
 
 void Session::run(){
 
@@ -16,7 +18,6 @@ void Session::run(){
     bool quit = false;
     Uint32 tick_interval = 1000 / FPS;
     while(!quit){
-    
         Uint32 next_tick = SDL_GetTicks() + tick_interval;
         SDL_Event event;
         while(SDL_PollEvent(&event)){
@@ -47,27 +48,29 @@ void Session::run(){
         
         }
 
-         // Tick för sprites
+        //  Tick för sprites
         // for (Sprite *sprite : sprites) 
         //    sprite->tick();
         // // Lägga till element (och HUD?)
         // for (Sprite *sprite : added)
         //     sprites.push_back(sprite);   
         // added.clear();
-        // // Ta bort element (och HUD?)
+        // Ta bort element (och HUD?)
 
-        // // Draw, ritar ut alla objekt, obs på HUD och sprite samling
-        // SDL_RenderClear(sys_.getRenderer());
+        // Draw, ritar ut alla objekt, obs på HUD och sprite samling
+        //SDL_RenderClear(syst_.getRenderer());
         
-        // for (Sprite *sprite : sprites)
+        //for (Sprite *sprite : sprites)
         //     sprite->draw();
-
-        // SDL_RenderPresent(sys_.getRenderer());
-        // // FPS delay
-        // int delay = next_tick - SDL_GetTicks();
-        // if (delay > 0) {
-        //     SDL_Delay(delay);
-        // }
+        //SDL_SetRenderDrawColor()
+        SDL_RenderCopy(syst_.getRenderer(), syst_.getTexture(), NULL, NULL);
+        SDL_RenderPresent(syst_.getRenderer());
+        // FPS delay
+        /*
+        int delay = next_tick - SDL_GetTicks();
+        if (delay > 0) {
+            SDL_Delay(delay);
+        }*/
     } // outer while
 
     
