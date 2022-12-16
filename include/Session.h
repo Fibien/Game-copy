@@ -12,7 +12,6 @@
 class Session{
 
     public:
-
     Session(int, int, std::string, std::string);
     //Session(std::unordered_map<SDL_Event,int> test );
     void run();

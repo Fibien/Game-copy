@@ -1,5 +1,6 @@
 ﻿#include <algorithm>
 #include <stdexcept>
+#include "System.h"
 #include "Session.h"
 #include "Sprite.h"
 #include "Player.h"
@@ -7,8 +8,8 @@
 //#include "Pl"
 
 // Skapa default varianter, flytta konstanter från system
-Session::Session(int x, int y, std::string name, std::string path) {
-
+Session::Session(int x, int y, std::string title, std::string path) {
+    //System::syst_(x,y,title,path);
 }
 
 void Session::run(){

@@ -29,5 +29,6 @@ const std::string System::default_title_ = "Game";
 const int System::default_height_ = 800;
 const int System::default_width_ = 600;
 
+// Hur gör man så använder kan ställa in size, titel och bakgrund
 System syst_(800, 600, "Game", "./images/Background.jpg");
 
