@@ -13,7 +13,7 @@ class Player : public Sprite{
     void keyDown(SDL_Event&);
     void keyUp(SDL_Event&);
     void tick();
-    void draw() const;
+    void draw();
     ~Player();
 
     protected:

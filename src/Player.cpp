@@ -17,16 +17,14 @@ Player* Player::getInstance(int x, int y, int h, int w, std::string path) {
 
 void Player::keyDown(SDL_Event& eve){
     if (eve.key.keysym.sym == SDLK_LEFT) {
-        this->getRect().x--; 
+        this->getRect().x -= 5; 
     }
     if (eve.key.keysym.sym == SDLK_RIGHT) {
-        this->getRect().x++;
+        this->getRect().x += 5;
     }
-    // SDL_Rect rect = getRect();
 }
 
 void Player::keyUp(SDL_Event& eve) {
-    
 }
 
 void Player::tick(){
@@ -34,8 +32,9 @@ void Player::tick(){
 } 
 
 
-void Player::draw() const {
-   
-    SDL_RenderCopy(syst_.getRenderer(), getTexture(), NULL, &getRect());
+void Player::draw() {
+   SDL_Rect &rect = getRect();
+
+    SDL_RenderCopy(syst_.getRenderer(), getTexture(), NULL, &rect);
 }
 
