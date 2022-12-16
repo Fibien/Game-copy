@@ -30,8 +30,6 @@ void Player::tick(){
 void Player::draw() const {
     // const SDL_Rect &rect = getRect();
 
-    SDL_RenderCopy(syst_.getRenderer(), getTexture(), NULL, getRect()
-    
-    );
+    //SDL_RenderCopy(syst_.getRenderer(), getTexture(), NULL, getRect());
 }
 

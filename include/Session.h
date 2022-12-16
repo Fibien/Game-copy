@@ -31,7 +31,7 @@ class Session{
     private:
     bool is_session_running_;
     //void removeElement(std::vector<Sprite>&, Sprite);
-    // System sys_;
+    System sys_;
     // Deklarera en samling för objekt som ska läggas till och för objekt som tag bort
 
     std::vector<Sprite*> sprites;

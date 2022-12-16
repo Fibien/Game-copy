@@ -7,9 +7,11 @@
 //#include "Pl"
 
 // Skapa default varianter, flytta konstanter från system
-Session::Session(int x, int y, std::string name, std::string path) {}
+Session::Session(int x, int y, std::string name, std::string path) : sys_(){}
 
 void Session::run(){
+
+    
     is_session_running_ = true;
     bool quit = false;
     Uint32 tick_interval = 1000 / FPS;
@@ -46,27 +48,29 @@ void Session::run(){
         }
 
          // Tick för sprites
-        for (Sprite *sprite : sprites) 
-           sprite->tick();
-        // Lägga till element (och HUD?)
-        for (Sprite *sprite : added)
-            sprites.push_back(sprite);   
-        added.clear();
-        // Ta bort element (och HUD?)
+        // for (Sprite *sprite : sprites) 
+        //    sprite->tick();
+        // // Lägga till element (och HUD?)
+        // for (Sprite *sprite : added)
+        //     sprites.push_back(sprite);   
+        // added.clear();
+        // // Ta bort element (och HUD?)
 
-        // Draw, ritar ut alla objekt, obs på HUD och sprite samling
-        SDL_RenderClear(syst_.getRenderer());
+        // // Draw, ritar ut alla objekt, obs på HUD och sprite samling
+        // SDL_RenderClear(sys_.getRenderer());
         
-        for (Sprite *sprite : sprites)
-            sprite->draw();
+        // for (Sprite *sprite : sprites)
+        //     sprite->draw();
 
-        SDL_RenderPresent(syst_.getRenderer());
-        // FPS delay
-        int delay = next_tick - SDL_GetTicks();
-        if (delay > 0) {
-            SDL_Delay(delay);
-        }
+        // SDL_RenderPresent(sys_.getRenderer());
+        // // FPS delay
+        // int delay = next_tick - SDL_GetTicks();
+        // if (delay > 0) {
+        //     SDL_Delay(delay);
+        // }
     } // outer while
+
+    
 }
 
 void Session::addSprite(Sprite* sprite){
@@ -101,3 +105,4 @@ void Session::removeElement(std::vector<Sprite>& vec, Sprite sprite){
 
     } 
 } */
+
