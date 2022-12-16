@@ -3,6 +3,7 @@
 
 #include "Sprite.h"
 #include "System.h"
+#include "Player.h"
 #include "HUD.h"
 #include <vector>
 #include <unordered_map>
@@ -16,7 +17,7 @@ class Session{
     //Session(std::unordered_map<SDL_Event,int> test );
     void run();
     void addSprite(Sprite*);
-    void addPlayer(Sprite*);
+    void addPlayer(Player*);
     void addHUD(HUD*);
     void remove(Sprite*);
 
@@ -35,7 +36,7 @@ class Session{
     // Deklarera en samling för objekt som ska läggas till och för objekt som tag bort
 
     std::vector<Sprite*> sprites;
-    std::vector<Sprite*> players_;
+    std::vector<Player*> players_;
     std::vector<HUD*> HUDs_;
     std::vector<Sprite*> added;
     std::vector<Sprite*> removed;

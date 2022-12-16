@@ -26,15 +26,12 @@ void Session::run(){
             
                 // Lägga till paus func senare
                 case SDL_KEYUP: {
-                    //for_each(players_.begin(), players_.end(), [&event](Player player)->void{player.keyDown(event);});                 
-                    // itererar igenom lista och anropar keyup på varje element
                 break;
                 }
                 case SDL_KEYDOWN: {
-                      //  for_each(players_.begin(), players_.end(), [&event](Sprite& sprite)->void{sprite.keyUp(event);});
-                        //for(int i = players_.begin(); i != players_.end(); i++){
-                        //}
-                         // itererar igenom lista och anropar keydown på varje element
+                      for(Player *player : players_){
+                            player->keyDown(event); 
+                      }
                 break;
                 }
                 case SDL_QUIT: quit = true; break;
@@ -58,12 +55,20 @@ void Session::run(){
         // Ta bort element (och HUD?)
 
         // Draw, ritar ut alla objekt, obs på HUD och sprite samling
-        //SDL_RenderClear(syst_.getRenderer());
+        SDL_RenderClear(syst_.getRenderer());
         
         //for (Sprite *sprite : sprites)
-        //     sprite->draw();
-        //SDL_SetRenderDrawColor()
+          //  sprite->draw();
+
+   
+
+        // SDL_SetRenderDrawColor()
         SDL_RenderCopy(syst_.getRenderer(), syst_.getTexture(), NULL, NULL);
+
+        for(Player *player : players_){
+            player->draw();
+        }
+
         SDL_RenderPresent(syst_.getRenderer());
         // FPS delay
         /*
@@ -82,7 +87,7 @@ void Session::addSprite(Sprite* sprite){
 }
 
 // Kolla om de pekar på samma obj
-void Session::addPlayer(Sprite *player){
+void Session::addPlayer(Player *player){
     if(is_session_running_){
         throw std::invalid_argument("Players can't be added during runtime");
     }

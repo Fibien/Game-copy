@@ -12,12 +12,9 @@ System::System(int x, int y, std::string title, std::string path) {
     SDL_WINDOWPOS_CENTERED, x, y, 0);
     ren_ = SDL_CreateRenderer(window_, -1,0);
     std::cout << gResPath + path << std::endl;
-    SDL_Texture *txt = IMG_LoadTexture(ren_, (gResPath + path).c_str());
-    if (txt == nullptr)
-        std::cout << "HALLO" << std::endl;
- 
-    //SDL_RenderCopy(ren_, txt, NULL, NULL);
-    //SDL_RenderPresent(ren_);
+    txt_ = IMG_LoadTexture(ren_, (gResPath + path).c_str());
+    SDL_RenderCopy(ren_, txt_, NULL, NULL);
+    SDL_RenderPresent(ren_);
 }
 
 System::~System(){

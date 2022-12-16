@@ -5,13 +5,8 @@
 #include "System.h"
 #include "Constants.h"
 
-Sprite::Sprite(int x, int y, int height, int width, std::string path){
+// Ska lägga till värdena i rektangeln
 
-    this->x = x;
-    this->y = y;
-    this->height = height;
-    this->width = width;
+ Sprite::Sprite(int x, int y, int w, int h, std::string path): rect_{x,y,w,h} {
     texture_ = IMG_LoadTexture(syst_.getRenderer(), (constants::gResPath + path).c_str());
-};
-
-
+}

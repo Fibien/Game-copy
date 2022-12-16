@@ -8,8 +8,10 @@
 
 void testMethod(){
 
-    //Player* p = Player::getInstance(100,100,100,100, "Player.png");
+    Player* p = Player::getInstance(800,50,100,50, "./images/Player.png");
 
+    if (p->getTexture() == nullptr)
+        std::cout << "Null in main " << std::endl;
     // Test System ctr
     //System sys; // 🗸
     // System sys(800, 600); // 🗸
@@ -18,7 +20,7 @@ void testMethod(){
 
     //Session ses(800, 600, "game", "./images/gul.bmp");
     Session ses(800, 600, "game", "./images/Background.jpg");
-    //ses.addPlayer(p);
+    ses.addPlayer(p);
     //ses.addPlayer
     ses.run();
 
