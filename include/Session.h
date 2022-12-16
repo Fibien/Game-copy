@@ -29,15 +29,16 @@ class Session{
 
     private:
     
-    void removeElement(std::vector<Sprite>&, Sprite);
+    //void removeElement(std::vector<Sprite>&, Sprite);
     System sys_;
     // Deklarera en samling för objekt som ska läggas till och för objekt som tag bort
-    std::vector<Sprite> sprite_;
+
+    std::vector<Sprite> sprites;
     std::vector<Sprite*> players_;
     std::vector<HUD> HUDs_;
     std::vector<Sprite> added;
     std::vector<Sprite> removed;
-
+    
    
 };
 

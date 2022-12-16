@@ -8,6 +8,7 @@
 class System{
 
     public:
+    // Fundera på dessa, ta bort eller ha kvar?
     System();
     System(int, int);
     System(int, int, std::string, std::string);
