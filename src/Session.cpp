@@ -135,4 +135,5 @@ SDL_Renderer* Session::getRenderer() {
 }
 
 //Förslag på ändring, gör att vi blir av med några magic number
-Session ses(800, 600, "game", "./images/Background.jpg");
+//Session ses(800, 600, "game", "./images/Background.jpg");
+Session ses(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_TITLE, DEFAULT_BACKGROUND);

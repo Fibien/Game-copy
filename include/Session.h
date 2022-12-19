@@ -1,6 +1,11 @@
 ﻿#ifndef SESSION_H
 #define SESSION_H
 
+#define DEFAULT_BACKGROUND "./images/Background.jpg"
+#define DEFAULT_TITLE "Game"
+#define DEFAULT_HEIGHT 800
+#define DEFAULT_WIDTH 600
+
 #include "Sprite.h"
 #include "System.h"
 // #include "Player.h"
@@ -11,6 +16,7 @@
 #include <string>
 // #include "Bullet.h"
 #include <functional>
+
 
 // Testa om dessa fortfarande behövs annars ta bort
 class Player;
