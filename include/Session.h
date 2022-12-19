@@ -11,6 +11,8 @@
 
 class Session{
 
+    typedef std::pair<std::string, std::string> input_pair;
+
     public:
     Session(int, int, std::string, std::string);
     //Session(std::unordered_map<SDL_Event,int> test );
@@ -19,6 +21,8 @@ class Session{
     void addPlayer(Player*);
     void addHUD(HUD*);
     void remove(Sprite*);
+    void createTexture(std::initializer_list<input_pair> pairs);
+    SDL_Texture* getTexture(std::string);
 
     // Victory func
     // defeat func
@@ -30,8 +34,9 @@ class Session{
 
     private:
     bool is_session_running_;
+    int max_y_, max_x_;
     //void removeElement(std::vector<Sprite>&, Sprite);
-    // System sys_;
+    System syst_;
     // Deklarera en samling för objekt som ska läggas till och för objekt som tag bort
 
     std::vector<Sprite*> sprites;
@@ -42,8 +47,5 @@ class Session{
     
    
 };
-
-extern System syst_;
-
 
 #endif

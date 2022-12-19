@@ -8,8 +8,9 @@
 //#include "Pl"
 
 // Skapa default varianter, flytta konstanter från system
-Session::Session(int x, int y, std::string title, std::string path)  {
-    //syst_{x,y,title,path}
+Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y, title, path){
+    max_x_ = x;
+    max_y_ = y;
 }
 
 void Session::run(){
@@ -18,7 +19,7 @@ void Session::run(){
     bool quit = false;
     Uint32 tick_interval = 1000 / FPS;
     while(!quit){
-        Uint32 next_tick = SDL_GetTicks() + tick_interval;
+        // Uint32 next_tick = SDL_GetTicks() + tick_interval;
         SDL_Event event;
         while(SDL_PollEvent(&event)){
         
@@ -30,7 +31,7 @@ void Session::run(){
                 }
                 case SDL_KEYDOWN: {
                       for(Player *player : players_){
-                            player->keyDown(event); 
+                            player->keyDown(event, max_x_); 
                       }
                 break;
                 }
@@ -66,7 +67,7 @@ void Session::run(){
         SDL_RenderCopy(syst_.getRenderer(), syst_.getTexture(), NULL, NULL);
 
         for(Player *player : players_){
-            player->draw();
+            player->draw(syst_.getRenderer());
         }
 
         SDL_RenderPresent(syst_.getRenderer());
@@ -105,6 +106,16 @@ void Session::remove(Sprite& sprite){
     // Tänk mer, interaktion med remove vektorn?
     //vec.erase();
 }
+
+void Session::createTexture(std::initializer_list<input_pair> pairs){
+    syst_.createTexture(pairs);
+}
+
+
+SDL_Texture* Session::getTexture(std::string key){
+    return syst_.getTexture(key);
+}
+
 
 // TODO Later
 /*

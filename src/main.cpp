@@ -4,14 +4,14 @@
 #include <string>
 #include "Player.h"
 
-
+typedef std::pair<std::string, std::string> input_pair;
 
 void testMethod(){
 
-    Player* p = Player::getInstance(100,500,100,100, "./images/Player.png");
+    input_pair player = std::make_pair("Player", "./images/Player.png");
 
-    if (p->getTexture() == nullptr)
-        std::cout << "Null in main " << std::endl;
+
+   
     // Test System ctr
     //System sys; // 🗸
     // System sys(800, 600); // 🗸
@@ -19,8 +19,16 @@ void testMethod(){
     //System sys(800, 600, "Game", default_path); // 🗸
 
     //Session ses(800, 600, "game", "./images/gul.bmp");
-    Session ses(800, 600, "game", "./images/gul.bmp");
-    //Session ses(800, 600, "game", "./images/Background.jpg");
+    //Session ses(800, 600, "game", "./images/gul.bmp");
+    Session ses(800, 600, "game", "./images/Background.jpg");
+    ses.createTexture({player});
+    Player* p = Player::getInstance(100,500,100,100, ses.getTexture("Player"));
+
+    //if (p->getTexture() == nullptr)
+    //    std::cout << "Null in main " << std::endl;
+
+
+
     ses.addPlayer(p);
     //ses.addPlayer
     ses.run();

@@ -9,15 +9,15 @@
 class Player : public Sprite{
 
     public:
-    static Player* getInstance(int, int, int, int, std::string);
-    void keyDown(SDL_Event&);
-    void keyUp(SDL_Event&);
+    static Player* getInstance(int, int, int, int, SDL_Texture*);
+    void keyDown(SDL_Event&, int);
+    void keyUp(SDL_Event&, int);
     void tick();
-    void draw();
+    void draw(SDL_Renderer*);
     ~Player();
 
     protected:
-    Player(int x, int y, int height, int width, std::string path) : Sprite(x,y,height,width,path) {}
+    Player(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x, y, height, width, texture) {}
 
 };
 

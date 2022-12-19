@@ -7,6 +7,4 @@
 
 // Ska lägga till värdena i rektangeln
 
- Sprite::Sprite(int x, int y, int w, int h, std::string path): rect_{x,y,w,h} {
-    texture_ = IMG_LoadTexture(syst_.getRenderer(), (constants::gResPath + path).c_str());
-}
+ Sprite::Sprite(int x, int y, int w, int h, SDL_Texture* texture_) : rect_{x,y,w,h}, texture_(texture_) {}

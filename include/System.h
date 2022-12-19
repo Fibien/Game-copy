@@ -4,8 +4,12 @@
 #include <SDL2/SDL.h>
 //#include <SDL_image.h>
 #include <string>
+#include <initializer_list>
+#include <map>
 
 class System{
+
+    typedef std::pair<std::string, std::string> input_pair;
 
     public:
     // Fundera på dessa, ta bort eller ha kvar?
@@ -13,6 +17,8 @@ class System{
     ~System();
     SDL_Renderer* getRenderer() {return ren_;}; 
     SDL_Texture* getTexture() {return txt_;};
+    void createTexture(std::initializer_list<input_pair> pairs);
+    SDL_Texture* getTexture(std::string);
 
     private:
     const static std::string default_background_;
@@ -22,8 +28,7 @@ class System{
     SDL_Window *window_;
     SDL_Renderer *ren_;
     SDL_Texture* txt_;
+    std::map<std::string, SDL_Texture*> textures_;
 };
-
-extern System syst_;
 
 #endif

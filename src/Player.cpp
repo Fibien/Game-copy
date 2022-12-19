@@ -10,31 +10,34 @@ Player::~Player(){
     //SDL_DestroyTexture(getTexture());
 }
 
-Player* Player::getInstance(int x, int y, int h, int w, std::string path) {
-    return new Player(x, y, h, w, path);
+Player* Player::getInstance(int x, int y, int h, int w, SDL_Texture* texture) {
+    return new Player(x, y, h, w, texture);
 }
 
+// Ha kvar max y?
+void Player::keyDown(SDL_Event& eve, int max_x_){
 
-void Player::keyDown(SDL_Event& eve){
-    if (eve.key.keysym.sym == SDLK_LEFT) {
-        this->getRect().x -= 5; 
+    int move = 5;
+
+    if (eve.key.keysym.sym == SDLK_LEFT && this->getRect().x >= move) {
+        this->getRect().x -= move; 
     }
-    if (eve.key.keysym.sym == SDLK_RIGHT) {
-        this->getRect().x += 5;
+    // Update size
+    if (eve.key.keysym.sym == SDLK_RIGHT && this->getRect().x <= (max_x_-(this->getRect().w+move))) {
+        this->getRect().x += move;
     }
+    
 }
 
-void Player::keyUp(SDL_Event& eve) {
+void Player::keyUp(SDL_Event& eve, int x) {
+
 }
 
 void Player::tick(){
 
 } 
 
-
-void Player::draw() {
-   SDL_Rect &rect = getRect();
-
-    SDL_RenderCopy(syst_.getRenderer(), getTexture(), NULL, &rect);
+void Player::draw(SDL_Renderer* ren) { 
+    SDL_RenderCopy(ren, getTexture(), NULL, &getRect());
 }
 
