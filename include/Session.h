@@ -8,6 +8,7 @@
 #include <vector>
 #include <unordered_map>
 #include <SDL2/SDL.h>
+#include <string>
 
 class Session{
 
@@ -23,7 +24,7 @@ class Session{
     void remove(Sprite*);
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
-
+    // friend class Sprite;
     // Victory func
     // defeat func
     // collision  
@@ -44,8 +45,12 @@ class Session{
     std::vector<HUD*> HUDs_;
     std::vector<Sprite*> added;
     std::vector<Sprite*> removed;
+    // friend SDL_Texture* getTexture(std::string);
     
    
 };
+
+
+
 
 #endif

@@ -2,7 +2,6 @@
 #define SYSTEM_H
 
 #include <SDL2/SDL.h>
-//#include <SDL_image.h>
 #include <string>
 #include <initializer_list>
 #include <map>
@@ -13,12 +12,16 @@ class System{
 
     public:
     // Fundera på dessa, ta bort eller ha kvar?
+
     System(int, int, std::string, std::string);
     ~System();
     SDL_Renderer* getRenderer() {return ren_;}; 
-    SDL_Texture* getTexture() {return txt_;};
+    SDL_Texture* getBackgroundTexture() {return txt_;};
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
+
+    // Test func
+    int func2(int);
 
     private:
     const static std::string default_background_;

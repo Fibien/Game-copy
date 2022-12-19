@@ -14,7 +14,7 @@ Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y
 }
 
 void Session::run(){
-    
+
     is_session_running_ = true;
     bool quit = false;
     Uint32 tick_interval = 1000 / FPS;
@@ -29,11 +29,12 @@ void Session::run(){
                 case SDL_KEYUP: {
                 break;
                 }
+
                 case SDL_KEYDOWN: {
-                      for(Player *player : players_){
-                            player->keyDown(event, max_x_); 
-                      }
-                break;
+                    for(Player *player : players_){
+                        player->keyDown(event, max_x_, this); 
+                    }   
+                    break;
                 }
                 case SDL_QUIT: quit = true; break;
                 // SDL_KEYDOWN 
@@ -42,9 +43,9 @@ void Session::run(){
 
                 // SDL_Keydown, samma för player anropar skjutfunktionen i player    
             
-            }
+            } // switch
         
-        }
+        } // inner while
 
         //  Tick för sprites
         // for (Sprite *sprite : sprites) 
@@ -64,7 +65,7 @@ void Session::run(){
    
 
         // SDL_SetRenderDrawColor()
-        SDL_RenderCopy(syst_.getRenderer(), syst_.getTexture(), NULL, NULL);
+        SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
 
         for(Player *player : players_){
             player->draw(syst_.getRenderer());
@@ -77,10 +78,10 @@ void Session::run(){
         if (delay > 0) {
             SDL_Delay(delay);
         }*/
-    } // outer while
 
-    
-}
+    } // End outer while
+} // End run()
+
 
 void Session::addSprite(Sprite* sprite){
     // Ändra till added vectorn, minskar kodduplicering. 
@@ -111,6 +112,11 @@ void Session::createTexture(std::initializer_list<input_pair> pairs){
     syst_.createTexture(pairs);
 }
 
+/*
+SDL_Texture* Session::getTexture(std::string key){
+    return syst_.getTexture(key);
+}
+*/
 
 SDL_Texture* Session::getTexture(std::string key){
     return syst_.getTexture(key);
