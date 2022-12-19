@@ -11,7 +11,7 @@ void testMethod(){
     input_pair player = std::make_pair("Player", "./images/Player.png");
 
 
-    input_pair bullet = std::make_pair("Bullet", "./images/Bullet.png");
+    // input_pair bullet = std::make_pair("Bullet", "./images/Bullet.png");
     // Test System ctr
     //System sys; // 🗸
     // System sys(800, 600); // 🗸
@@ -21,7 +21,7 @@ void testMethod(){
     //Session ses(800, 600, "game", "./images/gul.bmp");
     //Session ses(800, 600, "game", "./images/gul.bmp");
     Session ses(800, 600, "game", "./images/Background.jpg");
-    ses.createTexture({player, bullet});
+    ses.createTexture({player});
     Player* p = Player::getInstance(100,500,100,100, ses.getTexture("Player"));
 
     //if (p->getTexture() == nullptr)
@@ -29,7 +29,7 @@ void testMethod(){
 
 
 
-    ses.addPlayer(p);
+    // ses.addPlayer(p);
     //ses.addPlayer
     ses.run();
 

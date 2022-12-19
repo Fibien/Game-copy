@@ -31,9 +31,9 @@ void Session::run(){
                 }
 
                 case SDL_KEYDOWN: {
-                    for(Player *player : players_){
-                        player->keyDown(event, max_x_, this); 
-                    }   
+                    // for(Player *player : players_){
+                    //     player->keyDown(event, max_x_, this); 
+                    // }   
                     break;
                 }
                 case SDL_QUIT: quit = true; break;
@@ -111,12 +111,6 @@ void Session::remove(Sprite& sprite){
 void Session::createTexture(std::initializer_list<input_pair> pairs){
     syst_.createTexture(pairs);
 }
-
-/*
-SDL_Texture* Session::getTexture(std::string key){
-    return syst_.getTexture(key);
-}
-*/
 
 SDL_Texture* Session::getTexture(std::string key){
     return syst_.getTexture(key);
