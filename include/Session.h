@@ -3,12 +3,17 @@
 
 #include "Sprite.h"
 #include "System.h"
-#include "Player.h"
+// #include "Player.h"
 #include "HUD.h"
 #include <vector>
 #include <unordered_map>
 #include <SDL2/SDL.h>
 #include <string>
+// #include "Bullet.h"
+
+class Player;
+// class Bullet;
+// class Sprite;
 
 class Session{
 
@@ -45,7 +50,6 @@ class Session{
     std::vector<HUD*> HUDs_;
     std::vector<Sprite*> added;
     std::vector<Sprite*> removed;
-    // friend SDL_Texture* getTexture(std::string);
     
    
 };

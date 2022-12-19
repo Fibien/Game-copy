@@ -31,9 +31,9 @@ void Session::run(){
                 }
 
                 case SDL_KEYDOWN: {
-                    // for(Player *player : players_){
-                    //     player->keyDown(event, max_x_, this); 
-                    // }   
+                    for(Player *player : players_){
+                        player->keyDown(event, max_x_, this); 
+                    }   
                     break;
                 }
                 case SDL_QUIT: quit = true; break;
@@ -47,17 +47,19 @@ void Session::run(){
         
         } // inner while
 
+        SDL_RenderClear(syst_.getRenderer());
+
         //  Tick för sprites
         // for (Sprite *sprite : sprites) 
         //    sprite->tick();
         // // Lägga till element (och HUD?)
-        // for (Sprite *sprite : added)
-        //     sprites.push_back(sprite);   
-        // added.clear();
+        for (Sprite *sprite : added)
+            sprites.push_back(sprite);   
+        added.clear();
         // Ta bort element (och HUD?)
 
         // Draw, ritar ut alla objekt, obs på HUD och sprite samling
-        SDL_RenderClear(syst_.getRenderer());
+      
         
         //for (Sprite *sprite : sprites)
           //  sprite->draw();
@@ -66,6 +68,10 @@ void Session::run(){
 
         // SDL_SetRenderDrawColor()
         SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
+
+        for (Sprite *sprite : sprites)
+           sprite->draw(syst_.getRenderer());
+
 
         for(Player *player : players_){
             player->draw(syst_.getRenderer());

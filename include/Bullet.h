@@ -4,6 +4,9 @@
 #include "Sprite.h"
 #include <string>
 #include <SDL2/SDL.h>
+#include "Session.h"
+
+// class Session;
 
 class Bullet : public Sprite{
 
@@ -11,7 +14,7 @@ class Bullet : public Sprite{
     static Bullet* getInstance(int, int, int, int, SDL_Texture*);
     ~Bullet();
     void draw(SDL_Renderer*);
-    void tick();
+    // void tick(Session*);
 
     protected:
     Bullet(int, int, int, int, SDL_Texture*);    
