@@ -12,7 +12,7 @@
 // #include "Bullet.h"
 
 class Player;
-// class Bullet;
+class Bullet;
 // class Sprite;
 
 class Session{

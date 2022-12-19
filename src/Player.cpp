@@ -34,7 +34,7 @@ void Player::keyDown(SDL_Event& eve, int max_x_ , Session* ses){
       
         std::cout << "Trycker på space" << std::endl;
         SDL_Texture* tex = ses->getTexture("Bullet");
-        Bullet* bullet = Bullet::getInstance((this->getRect().x)/2, this->getRect().y+10, 10, 20, tex);
+        Bullet* bullet = Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex);
         ses->addSprite(bullet);
     }
 }
@@ -42,9 +42,9 @@ void Player::keyDown(SDL_Event& eve, int max_x_ , Session* ses){
 
 void Player::keyUp(SDL_Event& eve, int x) {}
 
-// void Player::tick(Session* ses){
+void Player::tick(){
 
-// } 
+} 
 
 void Player::draw(SDL_Renderer* ren) { 
     SDL_RenderCopy(ren, getTexture(), NULL, &getRect());

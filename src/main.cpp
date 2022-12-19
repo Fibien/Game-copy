@@ -33,7 +33,7 @@ void testMethod(){
     //ses.addPlayer
     ses.run();
 
-
+    delete p;
 }
 
 

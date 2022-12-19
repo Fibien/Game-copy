@@ -50,8 +50,8 @@ void Session::run(){
         SDL_RenderClear(syst_.getRenderer());
 
         //  Tick för sprites
-        // for (Sprite *sprite : sprites) 
-        //    sprite->tick();
+        for (Sprite *sprite : sprites) 
+           sprite->tick();
         // // Lägga till element (och HUD?)
         for (Sprite *sprite : added)
             sprites.push_back(sprite);   
