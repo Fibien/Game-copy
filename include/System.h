@@ -11,14 +11,13 @@ class System{
     typedef std::pair<std::string, std::string> input_pair;
 
     public:
-    // Fundera på dessa, ta bort eller ha kvar?
-
     System(int, int, std::string, std::string);
     ~System();
     SDL_Renderer* getRenderer() {return ren_;}; 
     SDL_Texture* getBackgroundTexture() {return txt_;};
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
+    // Implementera en start metod som sätter upplösning och bakgrund alt gör en setResolution och setBackground metod
 
     private:
     const static std::string default_background_;

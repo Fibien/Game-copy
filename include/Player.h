@@ -7,8 +7,8 @@
 #include <SDL2/SDL_image.h>
 #include "System.h"
 #include <functional>
-// #include "Session.h"
 
+// Prova att ta bort, om möjligt gör detta
 class Session;
 
 class Player : public Sprite{

@@ -6,6 +6,7 @@
 #include <SDL2/SDL.h>
 #include "Session.h"
 
+// Prova att kommentera av, ta bort om möjligt
 class Session;
 
 class Bullet : public Sprite{

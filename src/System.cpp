@@ -32,23 +32,16 @@ void System::createTexture(std::initializer_list<input_pair> pairs){
         if(image == nullptr){
             std::cout << "Image was not found" << std::endl;
         }else{
-
             textures_.insert(std::make_pair(pair.first, image));
         }
     }
 }
     
 SDL_Texture* System::getTexture(std::string key) {
-
     return textures_.at(key);
-
 }
 
 const std::string System::default_background_ = "./images/Background.jpg";
 const std::string System::default_title_ = "Game";
 const int System::default_height_ = 800;
 const int System::default_width_ = 600;
-
-// Hur gör man så använder kan ställa in size, titel och bakgrund
-// System syst_(800, 600, "Game", "./images/Background.jpg");
-

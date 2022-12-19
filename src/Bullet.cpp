@@ -13,7 +13,6 @@ Bullet* Bullet::getInstance(int x, int y, int height, int width, SDL_Texture* te
 }
 
 void Bullet::draw() {
-    // std::cout << "Skjut" << std::endl;
     SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
 }
 

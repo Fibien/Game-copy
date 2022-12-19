@@ -12,9 +12,9 @@
 // #include "Bullet.h"
 #include <functional>
 
+// Testa om dessa fortfarande behövs annars ta bort
 class Player;
 class Bullet;
-// class Sprite;
 
 class Session{
 
@@ -22,7 +22,6 @@ class Session{
 
     public:
     Session(int, int, std::string, std::string);
-    //Session(std::unordered_map<SDL_Event,int> test );
     void run();
     void addSprite(Sprite*);
     void addPlayer(Player*);
@@ -31,7 +30,6 @@ class Session{
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
     SDL_Renderer* getRenderer();
-    // friend class Sprite;
     // Victory func
     // defeat func
     // collision  
@@ -45,18 +43,14 @@ class Session{
     int max_y_, max_x_;
     //void removeElement(std::vector<Sprite>&, Sprite);
     System syst_;
-    // Deklarera en samling för objekt som ska läggas till och för objekt som tag bort
 
     std::vector<Sprite*> sprites;
     std::vector<Player*> players_;
     std::vector<HUD*> HUDs_;
     std::vector<Sprite*> added;
     std::vector<Sprite*> removed_;
-    
 };
 
 extern Session ses;
-
-
 
 #endif

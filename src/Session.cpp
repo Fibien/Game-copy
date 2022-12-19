@@ -9,27 +9,28 @@
 #define FPS 60
 //#include "Pl"
 
-// Skapa default varianter, flytta konstanter från system
 Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y, title, path){
     max_x_ = x;
     max_y_ = y;
 }
 
 
-
 void Session::run(){
 
+    // Refaktorera de två bool till en?
     is_session_running_ = true;
     bool quit = false;
     Uint32 tick_interval = 1000 / FPS;
+
     while(!quit){
+
         // Uint32 next_tick = SDL_GetTicks() + tick_interval;
         SDL_Event event;
         while(SDL_PollEvent(&event)){
-            // std::cout << "Inner while (event loop)" << std::endl;
+            
+            // Sätt switch event i en metod
             switch(event.type){
             
-                // Lägga till paus func senare
                 case SDL_KEYUP: {
                     for(Player *player : players_){
                         player->keyUp(event, max_x_);
@@ -46,32 +47,24 @@ void Session::run(){
                     break;
                 }
                 case SDL_QUIT: quit = true; break;
-                // SDL_KEYDOWN 
-                // Anropar Player via dess pekare (Player ligger i Sprite samlingen)
-                // Player anropar den tänkta knappe, övriga sprites anropas ej
-
-                // SDL_Keydown, samma för player anropar skjutfunktionen i player    
-            
-            } // switch
         
-        } // inner while
-
-       
+            } // End of switch
+        } // End of inner while loop
 
         SDL_RenderClear(syst_.getRenderer());
 
+        // Tick i en metod
         //  Tick för sprites
         for (Sprite *sprite : sprites) 
            sprite->tick();
   
+        // Lägga till element i en metod
         // // Lägga till element (och HUD?)
         for (Sprite *sprite : added)
             sprites.push_back(sprite);   
         added.clear();
-        // Ta bort element (och HUD?)
-
-        // Draw, ritar ut alla objekt, obs på HUD och sprite samling
-
+       
+        // Remove i en metod
         for (Sprite* sprite : removed_) {
             for (auto i = sprites.begin(); i != sprites.end();) {
                 if (*i == sprite) {
@@ -83,14 +76,9 @@ void Session::run(){
         }
         removed_.clear();       
         
-        //for (Sprite *sprite : sprites)
-          //  sprite->draw();
-
-   
-
-        // SDL_SetRenderDrawColor()
         SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
 
+        // de olika draw i en eller flera metoder
         for (Sprite *sprite : sprites)
            sprite->draw();
 
@@ -112,7 +100,6 @@ void Session::run(){
 
 
 void Session::addSprite(Sprite* sprite){
-    // Ändra till added vectorn, minskar kodduplicering. 
     added.push_back(sprite);
 }
 
@@ -132,7 +119,6 @@ void Session::addHUD(HUD* hud){
 }
 
 void Session::remove(Sprite* sprite){
-   
     removed_.push_back(sprite);
 }
 
