@@ -135,12 +135,4 @@ SDL_Renderer* Session::getRenderer() {
 }
 
 //Förslag på ändring, gör att vi blir av med några magic number
-//Session ses(800, 600, "game", "./images/Background.jpg");
-Session ses(default_height_, default_width_, default_title_, default_background_ );
-
-const static std::string default_background_ = "./images/Background.jpg";
-const static std::string default_title_ = "Game";
-const static int default_height_ = 800;
-const static int default_width_ = 600;
-
-   
+Session ses(800, 600, "game", "./images/Background.jpg");
