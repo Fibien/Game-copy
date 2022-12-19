@@ -41,4 +41,7 @@ SDL_Texture* System::getTexture(std::string key) {
     return textures_.at(key);
 }
 
-
+const std::string System::default_background_ = "./images/Background.jpg";
+const std::string System::default_title_ = "Game";
+const int System::default_height_ = 800;
+const int System::default_width_ = 600;

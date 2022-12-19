@@ -49,11 +49,6 @@ class Session{
     std::vector<HUD*> HUDs_;
     std::vector<Sprite*> added;
     std::vector<Sprite*> removed_;
-
-    const static std::string default_background_;
-    const static std::string default_title_;
-    const static int default_height_;
-    const static int default_width_;
 };
 
 extern Session ses;
