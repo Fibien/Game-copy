@@ -13,7 +13,7 @@ Bullet* Bullet::getInstance(int x, int y, int height, int width, SDL_Texture* te
 }
 
 void Bullet::draw(SDL_Renderer* ren) {
-    std::cout << "Draw bullet" << std::endl;
+    // std::cout << "Draw bullet" << std::endl;
     SDL_RenderCopy(ren, getTexture(), NULL, &getRect());
 }
 
@@ -21,7 +21,7 @@ void Bullet::tick() {
     if (getRect().y <= 0) {
 
     } else 
-    std::cout << "åker " << std::endl;
+    // std::cout << "åker " << std::endl;
         getRect().y--;
 }
 

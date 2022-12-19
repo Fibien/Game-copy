@@ -30,17 +30,19 @@ void Player::keyDown(SDL_Event& eve, int max_x_ , Session* ses){
     if (eve.key.keysym.sym == SDLK_RIGHT && this->getRect().x <= (max_x_-(this->getRect().w+move))) {
         this->getRect().x += move;
     }
+
+}
+
+
+void Player::keyUp(SDL_Event& eve, int x, Session* ses) { 
     if(eve.key.keysym.sym == SDLK_SPACE) {
       
-        std::cout << "Trycker på space" << std::endl;
+        std::cout << "Lyfter på space" << std::endl;
         SDL_Texture* tex = ses->getTexture("Bullet");
         Bullet* bullet = Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex);
         ses->addSprite(bullet);
     }
 }
-
-
-void Player::keyUp(SDL_Event& eve, int x) {}
 
 void Player::tick(){
 

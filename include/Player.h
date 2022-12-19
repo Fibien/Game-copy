@@ -17,7 +17,7 @@ class Player : public Sprite{
     static Player* getInstance(int, int, int, int, SDL_Texture*);
     //void keyDown(SDL_Event&, int, std::function<SDL_Texture*(std::string)>);
     void keyDown(SDL_Event&, int, Session*);
-    void keyUp(SDL_Event&, int);
+    void keyUp(SDL_Event&, int, Session*);
     void tick();
     void draw(SDL_Renderer*);
     ~Player();

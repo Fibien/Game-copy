@@ -27,6 +27,9 @@ void Session::run(){
             
                 // Lägga till paus func senare
                 case SDL_KEYUP: {
+                    for(Player *player : players_){
+                        player->keyUp(event, max_x_, this); 
+                    }  
                 break;
                 }
 
