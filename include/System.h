@@ -20,6 +20,7 @@ class System{
     // Implementera en start metod som sätter upplösning och bakgrund alt gör en setResolution och setBackground metod
 
     private:
+    // Ha kvar konstanterna?
     const static std::string default_background_;
     const static std::string default_title_;
     const static int default_height_;

@@ -11,6 +11,8 @@ class Sprite{
 
     public:
     
+    // Korrekt, destruktorn i bas-/superklass kommer anropas så småningom, lägg till att resurserna i Sprite destrueras där.   
+    // https://www.quantstart.com/articles/C-Virtual-Destructors-How-to-Avoid-Memory-Leaks/
     virtual ~Sprite() {std::cout << "Sprite destructor" << std::endl; SDL_DestroyTexture(texture_);};
     virtual void draw() = 0;
     virtual void tick() = 0;

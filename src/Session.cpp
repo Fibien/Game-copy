@@ -96,7 +96,7 @@ void Session::run(){
         }*/
 
     } // End outer while
-} // End run()
+} // End run
 
 
 void Session::addSprite(Sprite* sprite){
