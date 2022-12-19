@@ -1,5 +1,4 @@
 ﻿#include "Player.h"
-#include "Session.h"
 #include "Bullet.h"
 #include <string>
 #include <SDL2/SDL.h>
@@ -19,7 +18,7 @@ Player* Player::getInstance(int x, int y, int h, int w, SDL_Texture* texture) {
 
 // Städa metoden, lägga in bordermin och bordermax?
 
-void Player::keyDown(SDL_Event& eve, int max_x_ , Session* ses){
+void Player::keyDown(SDL_Event& eve, int max_x_){
 
     int move = 5;
 
@@ -33,14 +32,13 @@ void Player::keyDown(SDL_Event& eve, int max_x_ , Session* ses){
 
 }
 
-
-void Player::keyUp(SDL_Event& eve, int x, Session* ses) { 
+void Player::keyUp(SDL_Event& eve, int x) {  
     if(eve.key.keysym.sym == SDLK_SPACE) {
       
-        std::cout << "Lyfter på space" << std::endl;
-        SDL_Texture* tex = ses->getTexture("Bullet");
+        // std::cout << "Lyfter på space" << std::endl;
+        SDL_Texture* tex = ses.getTexture("Bullet");
         Bullet* bullet = Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex);
-        ses->addSprite(bullet);
+        ses.addSprite(bullet);
     }
 }
 
@@ -48,7 +46,7 @@ void Player::tick(){
 
 } 
 
-void Player::draw(SDL_Renderer* ren) { 
-    SDL_RenderCopy(ren, getTexture(), NULL, &getRect());
+void Player::draw() { 
+    SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
 }
 

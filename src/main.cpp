@@ -20,15 +20,11 @@ void testMethod(){
 
     //Session ses(800, 600, "game", "./images/gul.bmp");
     //Session ses(800, 600, "game", "./images/gul.bmp");
-    Session ses(800, 600, "game", "./images/Background.jpg");
     ses.createTexture({player, bullet});
     Player* p = Player::getInstance(100,500,100,100, ses.getTexture("Player"));
 
     //if (p->getTexture() == nullptr)
     //    std::cout << "Null in main " << std::endl;
-
-
-
     ses.addPlayer(p);
     //ses.addPlayer
     ses.run();

@@ -4,6 +4,8 @@
 #include "Session.h"
 #include "Sprite.h"
 #include "Player.h"
+#include <iostream>
+
 #define FPS 60
 //#include "Pl"
 
@@ -12,6 +14,8 @@ Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y
     max_x_ = x;
     max_y_ = y;
 }
+
+
 
 void Session::run(){
 
@@ -22,20 +26,22 @@ void Session::run(){
         // Uint32 next_tick = SDL_GetTicks() + tick_interval;
         SDL_Event event;
         while(SDL_PollEvent(&event)){
-        
+            // std::cout << "Inner while (event loop)" << std::endl;
             switch(event.type){
             
                 // Lägga till paus func senare
                 case SDL_KEYUP: {
                     for(Player *player : players_){
-                        player->keyUp(event, max_x_, this); 
+                        player->keyUp(event, max_x_);
+                        // std::cout << "Crashing" << std::endl;
                     }  
                 break;
                 }
 
                 case SDL_KEYDOWN: {
                     for(Player *player : players_){
-                        player->keyDown(event, max_x_, this); 
+                        //player->keyDown(event, max_x_, this); 
+                        player->keyDown(event, max_x_);
                     }   
                     break;
                 }
@@ -50,11 +56,14 @@ void Session::run(){
         
         } // inner while
 
+       
+
         SDL_RenderClear(syst_.getRenderer());
 
         //  Tick för sprites
         for (Sprite *sprite : sprites) 
            sprite->tick();
+  
         // // Lägga till element (och HUD?)
         for (Sprite *sprite : added)
             sprites.push_back(sprite);   
@@ -62,7 +71,17 @@ void Session::run(){
         // Ta bort element (och HUD?)
 
         // Draw, ritar ut alla objekt, obs på HUD och sprite samling
-      
+
+        for (Sprite* sprite : removed_) {
+            for (auto i = sprites.begin(); i != sprites.end();) {
+                if (*i == sprite) {
+                    i = sprites.erase(i);
+                } else {
+                    i++;
+                }
+            }
+        }
+        removed_.clear();       
         
         //for (Sprite *sprite : sprites)
           //  sprite->draw();
@@ -73,11 +92,11 @@ void Session::run(){
         SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
 
         for (Sprite *sprite : sprites)
-           sprite->draw(syst_.getRenderer());
+           sprite->draw();
 
 
         for(Player *player : players_){
-            player->draw(syst_.getRenderer());
+            player->draw();
         }
 
         SDL_RenderPresent(syst_.getRenderer());
@@ -112,9 +131,9 @@ void Session::addHUD(HUD* hud){
     HUDs_.push_back(hud);
 }
 
-void Session::remove(Sprite& sprite){
-    // Tänk mer, interaktion med remove vektorn?
-    //vec.erase();
+void Session::remove(Sprite* sprite){
+   
+    removed_.push_back(sprite);
 }
 
 void Session::createTexture(std::initializer_list<input_pair> pairs){
@@ -125,12 +144,11 @@ SDL_Texture* Session::getTexture(std::string key){
     return syst_.getTexture(key);
 }
 
+SDL_Renderer* Session::getRenderer() {
+    return syst_.getRenderer();
+}
 
-// TODO Later
-/*
-void Session::removeElement(std::vector<Sprite>& vec, Sprite sprite){
-    for(std::vector<Sprite>::iterator i = vec.begin(); i != vec.end();){
+Session ses(800, 600, "game", "./images/Background.jpg");
 
-    } 
-} */
+
 

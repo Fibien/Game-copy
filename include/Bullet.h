@@ -13,7 +13,7 @@ class Bullet : public Sprite{
     public:
     static Bullet* getInstance(int, int, int, int, SDL_Texture*);
     ~Bullet();
-    void draw(SDL_Renderer*);
+    void draw();
     void tick();
 
     protected:

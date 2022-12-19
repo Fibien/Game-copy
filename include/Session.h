@@ -10,6 +10,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 // #include "Bullet.h"
+#include <functional>
 
 class Player;
 class Bullet;
@@ -29,6 +30,7 @@ class Session{
     void remove(Sprite*);
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
+    SDL_Renderer* getRenderer();
     // friend class Sprite;
     // Victory func
     // defeat func
@@ -49,11 +51,11 @@ class Session{
     std::vector<Player*> players_;
     std::vector<HUD*> HUDs_;
     std::vector<Sprite*> added;
-    std::vector<Sprite*> removed;
+    std::vector<Sprite*> removed_;
     
-   
 };
 
+extern Session ses;
 
 
 

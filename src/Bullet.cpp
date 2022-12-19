@@ -12,16 +12,15 @@ Bullet* Bullet::getInstance(int x, int y, int height, int width, SDL_Texture* te
     return new Bullet(x,y,height,width,texture);
 }
 
-void Bullet::draw(SDL_Renderer* ren) {
-    // std::cout << "Draw bullet" << std::endl;
-    SDL_RenderCopy(ren, getTexture(), NULL, &getRect());
+void Bullet::draw() {
+    // std::cout << "Skjut" << std::endl;
+    SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
 }
 
 void Bullet::tick() {
     if (getRect().y <= 0) {
-
+        ses.remove(this);
     } else 
-    // std::cout << "åker " << std::endl;
         getRect().y--;
 }
 

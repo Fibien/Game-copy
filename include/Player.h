@@ -15,11 +15,12 @@ class Player : public Sprite{
 
     public:
     static Player* getInstance(int, int, int, int, SDL_Texture*);
-    //void keyDown(SDL_Event&, int, std::function<SDL_Texture*(std::string)>);
-    void keyDown(SDL_Event&, int, Session*);
-    void keyUp(SDL_Event&, int, Session*);
+  
+    //void keyDown(SDL_Event&, int, Session*);
+    void keyDown(SDL_Event&, int);
+    void keyUp(SDL_Event&, int);
     void tick();
-    void draw(SDL_Renderer*);
+    void draw();
     ~Player();
 
     protected:

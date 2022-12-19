@@ -20,9 +20,6 @@ class System{
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
 
-    // Test func
-    int func2(int);
-
     private:
     const static std::string default_background_;
     const static std::string default_title_;
