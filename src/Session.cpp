@@ -23,7 +23,7 @@ void Session::run(){
 
     while(is_session_running_){
 
-        Uint32 next_tick = SDL_GetTicks() + tick_interval;
+        Uint32 next_tick = SDL_GetTicks64() + tick_interval;
         SDL_Event event;
 
         handleEvent(event);
@@ -42,16 +42,17 @@ void Session::run(){
 
         invokeDraw();
 
-        SDL_RenderPresent(syst_.getRenderer());
-        // FPS delay
-        
-        int delay = next_tick - SDL_GetTicks();
-        if (delay > 0) {
-            SDL_Delay(delay);
-        }
+        displayElements();
+
+        int delay = determineDelay(next_tick);
+        createDelay(delay);
 
     } // End outer while
 } // End run
+
+
+
+
 
 
 void Session::addSprite(const std::shared_ptr<Sprite>& sprite) {
@@ -194,8 +195,19 @@ void Session::invokeDraw(){
     }
 }
 
+void Session::displayElements(){
+     SDL_RenderPresent(syst_.getRenderer());
+}
 
+int Session::determineDelay(Uint32 next_tick){
+      return next_tick - SDL_GetTicks();
+       
+}
 
-
+void Session::createDelay(int delay){
+        if (delay > 0) {
+            SDL_Delay(delay);
+        }
+}
 
 Session ses(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_TITLE, DEFAULT_BACKGROUND);

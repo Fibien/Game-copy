@@ -37,7 +37,6 @@ class Session{
     // Add defeat msgs
 
     private:
-    void handleSession(Uint32, bool);
     void handleEvent(SDL_Event&);
     void clearRenderer();
     void handleTick();
@@ -47,8 +46,8 @@ class Session{
     void renderBackground();
     void invokeDraw();
     void displayElements();
-    Uint32 determineDelay(Uint32);
-    void createDelay(Uint32);
+    int determineDelay(Uint32);
+    void createDelay(int);
     System syst_;
     bool is_session_running_;
     // Ha kvar max_y?
