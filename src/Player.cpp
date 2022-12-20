@@ -7,7 +7,6 @@
 
 Player::~Player(){
     // Behöver något destrueras i Player?
-    //std::cout << "Player destructor" << std::endl;
 }
 
 std::shared_ptr<Player> Player::getInstance(int x, int y, int h, int w, SDL_Texture* texture) {

@@ -1,5 +1,5 @@
 ﻿
-// Recommended order of include iostream, rest of standard library, third-partt library, local files
+// Recommended order of include iostream, rest of standard library, third-party library, local files
 #include <iostream>
 #include "Bullet.h"
 

@@ -44,7 +44,7 @@ class Session{
     void handleCollision();
     void removeElements();
     void renderBackground();
-    void invokeDraw();
+    void invokeDrawOnElements();
     void displayElements();
     int determineDelay(Uint32);
     void createDelay(int);
@@ -52,7 +52,6 @@ class Session{
     bool is_session_running_;
     // Ha kvar max_y?
     int max_y_, max_x_;
-    //void removeElement(std::vector<Sprite>&, Sprite); // Ha kvar metoden?
 
     std::vector<std::shared_ptr<Sprite> > sprites_;
     // Använda unique_ptr på player ??

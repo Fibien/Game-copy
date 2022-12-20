@@ -5,8 +5,10 @@
 
 #define FPS 60
 
-// Typedef has captital letter for every word
+// Typedef have captital letter for every word
 typedef std::shared_ptr<Sprite> SpritePtr;
+typedef std::shared_ptr<Player> PlayerPtr;
+typedef std::vector<std::shared_ptr<Sprite>>::iterator SpriteVectorIterator;
 typedef long long unsigned int LongUInt;
 
 Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y, title, path){
@@ -16,9 +18,7 @@ Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y
 
 void Session::run(){
 
-
     is_session_running_ = true;
-    //bool quit = false; // OK att ta bort?
     Uint32 tick_interval = 1000 / FPS;
 
     while(is_session_running_){
@@ -40,7 +40,7 @@ void Session::run(){
 
         renderBackground();
 
-        invokeDraw();
+        invokeDrawOnElements();
 
         displayElements();
 
@@ -49,11 +49,6 @@ void Session::run(){
 
     } // End outer while
 } // End run
-
-
-
-
-
 
 void Session::addSprite(const std::shared_ptr<Sprite>& sprite) {
     added_.push_back(std::move(sprite));
@@ -97,25 +92,20 @@ void Session::handleEvent(SDL_Event& event){
 
        while(SDL_PollEvent(&event)){
             
-            // Sätt switch event i en metod
             switch(event.type){
             
                 case SDL_KEYUP: {
                     for(std::shared_ptr<Player> player : players_){
                         player->keyUp(event, max_x_);
-                        // std::cout << "Crashing" << std::endl;
                     }  
-                break;
-                }
+                }break;
 
                 case SDL_KEYDOWN: {
-                    for(std::shared_ptr<Player> player : players_){
-                        //player->keyDown(event, max_x_, this); 
+                    for(std::shared_ptr<Player> player : players_){ 
                         player->keyDown(event, max_x_);
                     }   
-                    break;
-                }
-                // Ersätter quit med is_session_running_
+                }break;
+
                 case SDL_QUIT: is_session_running_ = false; break;
         
             } // End of switch
@@ -128,18 +118,15 @@ void Session::clearRenderer(){
 }
 
 void Session::handleTick(){
-
-    for (auto sprite : sprites_) {
+    for (SpritePtr sprite : sprites_) {
             sprite->tick();
         }
-
 }
 
 void Session::handleCreatedElements(){
-    for (auto sprite : added_) {
+    for (SpritePtr sprite : added_) {
         sprites_.push_back(std::move(sprite));
     }
-       
     added_.clear();   
 }
 
@@ -160,15 +147,15 @@ void Session::handleCollision(){
                 second->getCollisionBehaviour();
             }
                    
-        } // inner for
-    } // outer for
+        } // End of inner for loop
+    } // End of outer for loop
         
 }
 
 void Session::removeElements(){
 
-     for (std::shared_ptr<Sprite> sprite : removed_) {
-            for(std::vector<std::shared_ptr<Sprite>>::iterator i = sprites_.begin(); i != sprites_.end();){
+     for (SpritePtr sprite : removed_) {
+            for(SpriteVectorIterator i = sprites_.begin(); i != sprites_.end();){
                 if(*i == sprite){
                     i = sprites_.erase(i);
                 }
@@ -184,13 +171,13 @@ void Session::renderBackground(){
     SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
 }
 
-void Session::invokeDraw(){
+void Session::invokeDrawOnElements(){
 
-     for (auto sprite : sprites_) {
+    for (SpritePtr sprite : sprites_) {
             sprite->draw();
-     }
+    }
 
-    for(std::shared_ptr<Player> player : players_){
+    for(PlayerPtr player : players_){
             player->draw();
     }
 }
