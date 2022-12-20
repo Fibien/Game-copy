@@ -36,37 +36,6 @@ void Session::run(){
 
         handleCollision();
 
-        
-        // if(sprites_.size() > 1){
-
-        //     for(LongUInt i = 0; i < sprites_.size() - 1; i++){
-        //         for(LongUInt j = (i + 1); j < sprites_.size(); j++){
-        //             SpritePtr first = sprites_.at(i);
-        //             SpritePtr second = sprites_.at(j);
-                    
-        //             //// Varför kollision?
-        //             //if (!((*first) == (*second))) {
-        //                 bool collided = first->hasCollided(&first->getRect(), &second->getRect());
-        //                 if (collided) {
-        //                     first->getCollisionBehaviour();
-        //                     second->getCollisionBehaviour();
-        //                 }
-        //             //}    
-        //             //else{
-        //             //    std::cerr << "Lika i: " << &(*first) << " & j: " << &(*second) << std::endl;
-                    
-        //                 // SDL_Rect rect1 = first->getRect();
-        //                 // SDL_Rect rect2 = second->getRect();
-        //                 // std::printf("Rect 1: x: %d, y: %d, w: %d, h: %d\n", rect1.x, rect1.y, rect1.w, rect1.h);
-        //                 // std::printf("Rect 2: x: %d, y: %d, w: %d, h: %d\n", rect2.x, rect2.y, rect2.w, rect2.h);
-        //             //}
-        //         } // inner for
-        //     } // outer for
-        // }
-
-        // std::cerr << "After collison" << std::endl;
-
-        // std::cerr << "After collision loop" << std::endl;
         for (std::shared_ptr<Sprite> sprite : removed_) {
             for(std::vector<std::shared_ptr<Sprite>>::iterator i = sprites_.begin(); i != sprites_.end();){
                 if(*i == sprite){
@@ -195,32 +164,24 @@ void Session::handleCreatedElements(){
 
 void Session::handleCollision(){
 
-     if(sprites_.size() > 1){
+     if(sprites_.size() <= 1){
+        return;
+     }
 
-            for(LongUInt i = 0; i < sprites_.size() - 1; i++){
-                for(LongUInt j = (i + 1); j < sprites_.size(); j++){
-                    SpritePtr first = sprites_.at(i);
-                    SpritePtr second = sprites_.at(j);
+    for(LongUInt i = 0; i < sprites_.size() - 1; i++){
+        for(LongUInt j = (i + 1); j < sprites_.size(); j++){
+            SpritePtr first = sprites_.at(i);
+            SpritePtr second = sprites_.at(j);
                     
-                    //// Varför kollision?
-                    //if (!((*first) == (*second))) {
-                        bool collided = first->hasCollided(&first->getRect(), &second->getRect());
-                        if (collided) {
-                            first->getCollisionBehaviour();
-                            second->getCollisionBehaviour();
-                        }
-                    //}    
-                    //else{
-                    //    std::cerr << "Lika i: " << &(*first) << " & j: " << &(*second) << std::endl;
-                    
-                        // SDL_Rect rect1 = first->getRect();
-                        // SDL_Rect rect2 = second->getRect();
-                        // std::printf("Rect 1: x: %d, y: %d, w: %d, h: %d\n", rect1.x, rect1.y, rect1.w, rect1.h);
-                        // std::printf("Rect 2: x: %d, y: %d, w: %d, h: %d\n", rect2.x, rect2.y, rect2.w, rect2.h);
-                    //}
-                } // inner for
-            } // outer for
-        }
+            bool collided = first->hasCollided(&first->getRect(), &second->getRect());
+            if (collided) {
+                first->getCollisionBehaviour();
+                second->getCollisionBehaviour();
+            }
+                   
+        } // inner for
+    } // outer for
+        
 }
 
 Session ses(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_TITLE, DEFAULT_BACKGROUND);
