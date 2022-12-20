@@ -36,31 +36,11 @@ void Session::run(){
 
         handleCollision();
 
-        for (std::shared_ptr<Sprite> sprite : removed_) {
-            for(std::vector<std::shared_ptr<Sprite>>::iterator i = sprites_.begin(); i != sprites_.end();){
-                if(*i == sprite){
-                    // std::cout << "De är lika" << std::endl;
-                    i = sprites_.erase(i);
-                }
-                else{
-                    i++;
-                    // std::cout << "De är olika" << std::endl;
-                }
-            }
-        }
-        removed_.clear();
+        removeElements();
 
-        SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
+        renderBackground();
 
-        // de olika draw i en eller flera metoder
-
-        for (auto sprite : sprites_) {
-            sprite->draw();
-        }
-
-        for(std::shared_ptr<Player> player : players_){
-            player->draw();
-        }
+        invokeDraw();
 
         SDL_RenderPresent(syst_.getRenderer());
         // FPS delay
@@ -183,5 +163,39 @@ void Session::handleCollision(){
     } // outer for
         
 }
+
+void Session::removeElements(){
+
+     for (std::shared_ptr<Sprite> sprite : removed_) {
+            for(std::vector<std::shared_ptr<Sprite>>::iterator i = sprites_.begin(); i != sprites_.end();){
+                if(*i == sprite){
+                    i = sprites_.erase(i);
+                }
+                else{
+                    i++;
+                }
+            }
+        }
+        removed_.clear();
+}
+
+void Session::renderBackground(){
+    SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
+}
+
+void Session::invokeDraw(){
+
+     for (auto sprite : sprites_) {
+            sprite->draw();
+     }
+
+    for(std::shared_ptr<Player> player : players_){
+            player->draw();
+    }
+}
+
+
+
+
 
 Session ses(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_TITLE, DEFAULT_BACKGROUND);
