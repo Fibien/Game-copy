@@ -1,11 +1,10 @@
 ﻿#ifndef BULLET_H
 #define BULLET_H
 
-#include "Sprite.h"
+// Only use include directives that are neccessary for the .h file 
+// Set the rest of the include directives in the .cpp file to
+// minimize compile time. 
 #include "Session.h"
-#include <string>
-#include <SDL2/SDL.h>
-#include <memory>
 
 class Bullet : public Sprite , public std::enable_shared_from_this<Bullet>{
 

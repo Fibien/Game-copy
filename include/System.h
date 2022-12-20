@@ -1,10 +1,9 @@
 ﻿#ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include <SDL2/SDL.h>
 #include <string>
-#include <initializer_list>
 #include <map>
+#include <SDL2/SDL.h>
 
 class System{
 

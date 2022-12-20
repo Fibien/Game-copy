@@ -1,9 +1,8 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "Sprite.h"
-#include <SDL2/SDL.h>
 #include <memory>
+#include "Sprite.h"
 
 class Enemy : public Sprite, public std::enable_shared_from_this<Enemy> {
 

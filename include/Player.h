@@ -2,12 +2,6 @@
 #define PLAYER_H
 
 #include "Sprite.h"
-#include <string>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include "System.h"
-#include <functional>
-#include <memory>
 
 class Player : public Sprite{
 

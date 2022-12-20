@@ -1,17 +1,13 @@
-﻿#include <algorithm>
-#include <stdexcept>
-#include "System.h"
-#include "Session.h"
-#include "Sprite.h"
-#include "Player.h"
+﻿
+// Ta bort iostream efter testning
 #include <iostream>
-#include <memory>
-#include <vector>
-#include <stdio.h>
+#include "Session.h"
 
 #define FPS 60
 
-typedef std::shared_ptr<Sprite> sprite_ptr;
+// Typedef has captital letter for every word
+typedef std::shared_ptr<Sprite> SpritePtr;
+typedef long long unsigned int LongUInt;
 
 Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y, title, path){
     max_x_ = x;
@@ -82,10 +78,10 @@ void Session::run(){
         
         if(sprites_.size() > 1){
 
-            for(auto i = 0; i < sprites_.size() - 1; i++){
-                for(auto j = (i + 1); j < sprites_.size(); j++){
-                    sprite_ptr first = sprites_.at(i);
-                    sprite_ptr second = sprites_.at(j);
+            for(LongUInt i = 0; i < sprites_.size() - 1; i++){
+                for(LongUInt j = (i + 1); j < sprites_.size(); j++){
+                    SpritePtr first = sprites_.at(i);
+                    SpritePtr second = sprites_.at(j);
                     
                     //// Varför kollision?
                     //if (!((*first) == (*second))) {

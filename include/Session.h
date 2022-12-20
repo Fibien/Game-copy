@@ -6,17 +6,11 @@
 #define DEFAULT_HEIGHT 800
 #define DEFAULT_WIDTH 600
 
-#include "Sprite.h"
-#include "System.h"
-#include "HUD.h"
 #include <vector>
-#include <unordered_map>
-#include <SDL2/SDL.h>
-#include <string>
-#include <functional>
 #include <memory>
+#include "HUD.h"
+#include "System.h"
 #include "Player.h"
-#include "Bullet.h"
 
 
 // Testa om dessa fortfarande behövs annars ta bort

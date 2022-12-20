@@ -1,11 +1,11 @@
-﻿#include "Bullet.h"
-#include "Session.h"
-#include <string.h>
-#include <SDL2/SDL.h>
-#include <memory>
-
+﻿
+// Recommended order of include iostream, rest of standard library, third-partt library, local files
 #include <iostream>
-
+#include <memory>
+#include <SDL2/SDL.h>
+#include "Bullet.h"
+#include "Session.h"
+#include "Sprite.h"
 
 Bullet::Bullet(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x,y,height,width, texture){}
 
@@ -19,10 +19,9 @@ void Bullet::draw() {
 
 void Bullet::tick() {
     if (getRect().y <= 0) {
-        //ses.remove(this);
         ses.remove(shared_from_this());
     } else 
-        getRect().y--;
+        getRect().y-=10;
 }
 
 void Bullet::getCollisionBehaviour() {

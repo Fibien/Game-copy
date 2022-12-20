@@ -1,18 +1,14 @@
 ﻿#ifndef SPRITE_H
 #define SPRITE_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <string>
+// Ta bort iostream efter testning
 #include <iostream>
-#include "Constants.h"
+#include <SDL2/SDL.h>
 
 class Sprite{
 
     public:
     
-    // Korrekt, destruktorn i bas-/superklass kommer anropas så småningom, lägg till att resurserna i Sprite destrueras där.   
-    // https://www.quantstart.com/articles/C-Virtual-Destructors-How-to-Avoid-Memory-Leaks/
     virtual ~Sprite() {std::cout << "Sprite destructor" << std::endl;};
     virtual void draw() = 0;
     virtual void tick() = 0;

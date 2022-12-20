@@ -1,17 +1,19 @@
-﻿#include "Player.h"
-#include "Bullet.h"
-#include <string>
-#include <SDL2/SDL.h>
+﻿
+// Ta bort iostream efter testning
 #include <iostream>
 #include <string>
 #include <functional>
 #include <memory>
-
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include "System.h"
+#include "Sprite.h"
+#include "Player.h"
+#include "Bullet.h"
 
 Player::~Player(){
-    std::cout << "Player destructor" << std::endl;
-    // Hur gör man så att Sprite texture tags bort?
-    //SDL_DestroyTexture(getTexture());
+    // Behöver något destrueras i Player?
+    //std::cout << "Player destructor" << std::endl;
 }
 
 std::shared_ptr<Player> Player::getInstance(int x, int y, int h, int w, SDL_Texture* texture) {

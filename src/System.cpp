@@ -1,7 +1,8 @@
-﻿#include "System.h"
-#include "Constants.h"
+﻿// Ta bort iostream efter testning
 #include <iostream>
 #include <SDL2/SDL_image.h> 
+#include "System.h"
+#include "Constants.h"
 
 using namespace constants;
 
