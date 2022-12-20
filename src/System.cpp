@@ -6,12 +6,11 @@
 
 using namespace constants;
 
-System::System(int x, int y, std::string title, std::string path) : title(title) {
+System::System(int x, int y, std::string title, std::string path) {
     SDL_Init(SDL_INIT_EVERYTHING);
     window_ = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, 
     SDL_WINDOWPOS_CENTERED, x, y, 0);
     ren_ = SDL_CreateRenderer(window_, -1,0);
-    std::cerr << gResPath + path << std::endl;
     txt_ = IMG_LoadTexture(ren_, (gResPath + path).c_str());
     SDL_RenderCopy(ren_, txt_, NULL, NULL);
     SDL_RenderPresent(ren_);
@@ -38,12 +37,11 @@ void System::createTexture(std::initializer_list<input_pair> pairs){
 }
     
 SDL_Texture* System::getTexture(std::string key) {
-    std::cerr << "Hämtning nr: " << test++ << std::endl;
     return textures_.at(key);
 }
 
-void System::setWindow(int x, int y, SDL_Texture* txt){
-    txt_ = txt;
+void System::setWindow(int x, int y, SDL_Texture* txt_){
+    this->txt_ = txt_;
     SDL_SetWindowSize(window_, x, y);
     SDL_RenderClear(ren_);
     SDL_RenderCopy(ren_, txt_, NULL, NULL);

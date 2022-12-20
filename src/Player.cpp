@@ -15,35 +15,39 @@ std::shared_ptr<Player> Player::getInstance(int x, int y, int h, int w, SDL_Text
     return std::shared_ptr<Player>(new Player(x, y, h, w, texture));
 }
 
+void Player::draw() { 
+    SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
+}
+
 void Player::keyDown(SDL_Event& eve, int max_x_){
 
     int move = 5;
+    int lowerBoundry = move;
+    int higherBoundry = (max_x_-(this->getRect().w+move));
 
-    if (eve.key.keysym.sym == SDLK_LEFT && this->getRect().x >= move) {
+    if (eve.key.keysym.sym == SDLK_LEFT && this->getRect().x >= lowerBoundry) {
         this->getRect().x -= move; 
     }
 
-    // Update size
-    if (eve.key.keysym.sym == SDLK_RIGHT && this->getRect().x <= (max_x_-(this->getRect().w+move))) {
+    if (eve.key.keysym.sym == SDLK_RIGHT && this->getRect().x <= higherBoundry) {
         this->getRect().x += move;
     }
 }
 
 void Player::keyUp(SDL_Event& eve, int x) {  
     if(eve.key.keysym.sym == SDLK_SPACE) {
-                                                                                                            // Magic number                                                                       
+                                                                                                                                                                     
         SDL_Texture* tex = ses.getTexture("Bullet");
-        //std::shared_ptr<Sprite> bullet = Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex);
-        //ses.addSprite(std::move(bullet));
-        ses.addSprite(Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex));
+        int xMovement = this->getRect().x + (this->getRect().w/2);
+        int yMovement = this->getRect().y + 10;   
+        int width = 10;
+        int height = 20;
+
+        ses.addSprite(Bullet::getInstance(xMovement, yMovement, width, height, tex));
     }
 }
 
 void Player::tick(){
 
 } 
-
-void Player::draw() { 
-    SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
-}
 

@@ -14,15 +14,17 @@ void Bullet::draw() {
     SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
 }
 
+void Bullet::getCollisionBehaviour() {
+    ses.remove(shared_from_this());
+}
+
 void Bullet::tick() {
+
+    // Magic number in if and else
     if (getRect().y <= 0) {
         ses.remove(shared_from_this());
     } else 
         getRect().y-=10;
-}
-
-void Bullet::getCollisionBehaviour() {
-    ses.remove(shared_from_this());
 }
 
 Bullet::~Bullet() {

@@ -16,14 +16,12 @@ Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y
 
 void Session::run(){
 
-    
 
-    // Refaktorera de två bool till en?
     is_session_running_ = true;
-    bool quit = false;
+    //bool quit = false; // OK att ta bort?
     Uint32 tick_interval = 1000 / FPS;
 
-    while(!quit){
+    while(is_session_running_){
 
         Uint32 next_tick = SDL_GetTicks() + tick_interval;
         SDL_Event event;
@@ -47,7 +45,8 @@ void Session::run(){
                     }   
                     break;
                 }
-                case SDL_QUIT: quit = true; break;
+                // Ersätter quit med is_session_running_
+                case SDL_QUIT: is_session_running_ = false; break;
         
             } // End of switch
         } // End of inner while loop
@@ -144,16 +143,10 @@ void Session::run(){
 } // End run
 
 
-// Test
 void Session::addSprite(const std::shared_ptr<Sprite>& sprite) {
     added_.push_back(std::move(sprite));
 }
 
-void Session::remove(const std::shared_ptr<Sprite> &sprite) {
-    removed_.push_back(std::move(sprite));
-}
-
-// Kolla om de pekar på samma obj
 void Session::addPlayer(std::shared_ptr<Player> player){
     if(is_session_running_){
         throw std::invalid_argument("Players can't be added during runtime");
@@ -172,10 +165,6 @@ void Session::createTexture(std::initializer_list<input_pair> pairs){
     syst_.createTexture(pairs);
 }
 
-void Session::setWindow(int height, int width, SDL_Texture* texture) {
-    syst_.setWindow(height, width, texture);
-}
-
 SDL_Texture* Session::getTexture(std::string key){
     return syst_.getTexture(key);
 }
@@ -184,7 +173,12 @@ SDL_Renderer* Session::getRenderer() {
     return syst_.getRenderer();
 }
 
+void Session::remove(const std::shared_ptr<Sprite> &sprite) {
+    removed_.push_back(std::move(sprite));
+}
 
-//Förslag på ändring, gör att vi blir av med några magic number
-//Session ses(800, 600, "game", "./images/Background.jpg");
+void Session::setWindow(int height, int width, SDL_Texture* texture) {
+    syst_.setWindow(height, width, texture);
+}
+
 Session ses(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_TITLE, DEFAULT_BACKGROUND);

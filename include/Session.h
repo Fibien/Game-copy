@@ -22,12 +22,12 @@ class Session{
     void addSprite(const std::shared_ptr<Sprite>&); 
     void addPlayer(std::shared_ptr<Player>);
     void addHUD(HUD*);
-    void remove(const std::shared_ptr<Sprite>&); 
-    void createTexture(std::initializer_list<input_pair> pairs); 
-    void setWindow(int, int, SDL_Texture*);
+    void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
-    SDL_Renderer* getRenderer();
-
+    SDL_Renderer* getRenderer(); 
+    void remove(const std::shared_ptr<Sprite>&); 
+    void setWindow(int, int, SDL_Texture*);
+    
     // Victory func
     // defeat func
     // collision  
@@ -39,6 +39,7 @@ class Session{
     private:
     System syst_;
     bool is_session_running_;
+    // Ha kvar max_y?
     int max_y_, max_x_;
     //void removeElement(std::vector<Sprite>&, Sprite);
 

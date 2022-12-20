@@ -24,7 +24,6 @@ class Sprite{
     private:
     Sprite(const Sprite&) = delete;
     const Sprite& operator=(const Sprite&) = delete;
-    bool is_removable_;
     SDL_Rect rect_;
     SDL_Texture *texture_;
     

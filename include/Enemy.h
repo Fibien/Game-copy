@@ -11,15 +11,14 @@ class Enemy : public Sprite, public std::enable_shared_from_this<Enemy> {
     ~Enemy();
     void tick();
     void draw();
-    void reachGoal();
     void getCollisionBehaviour();
-    //bool enemyInFront();
+    //void reachGoal(); // Implement?
+    //bool enemyInFront(); // Implement?
 
     protected:
      // Ctr moved from public to protected
     Enemy(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x, y, height, width, texture) {}
    
-    
 };
 
 #endif
