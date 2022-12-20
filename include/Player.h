@@ -20,6 +20,9 @@ class Player : public Sprite{
     void draw();
     ~Player();
 
+    private:
+    int count = 0;
+
 };
 
 

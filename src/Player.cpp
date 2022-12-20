@@ -34,12 +34,11 @@ void Player::keyDown(SDL_Event& eve, int max_x_){
 
 void Player::keyUp(SDL_Event& eve, int x) {  
     if(eve.key.keysym.sym == SDLK_SPACE) {
-                                                                                                            // Magic number
-
-                                                                                    //    std::cout << "Skott" << std::endl;     
+                                                                                                            // Magic number                                                                       
         SDL_Texture* tex = ses.getTexture("Bullet");
-        std::shared_ptr<Sprite> bullet = Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex);
-        ses.addSprite(std::move(bullet));
+        //std::shared_ptr<Sprite> bullet = Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex);
+        //ses.addSprite(std::move(bullet));
+        ses.addSprite(Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex));
     }
 }
 

@@ -35,6 +35,7 @@ class Session{
     void addHUD(HUD*);
     void remove(const std::shared_ptr<Sprite>&); 
     void createTexture(std::initializer_list<input_pair> pairs);
+    //void 
     SDL_Texture* getTexture(std::string);
     SDL_Renderer* getRenderer();
     // Victory func

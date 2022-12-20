@@ -7,6 +7,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <stdio.h>
 
 #define FPS 60
 
@@ -18,6 +19,8 @@ Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y
 }
 
 void Session::run(){
+
+    
 
     // Refaktorera de två bool till en?
     is_session_running_ = true;
@@ -70,33 +73,41 @@ void Session::run(){
         // std::cerr << "Size After adding " << sprites_.size() << std::endl;
         added_.clear();       
         
-
+        int j = 0;
+        for (int i = 0; i < sprites_.size(); i++) {
+            std::cerr << "Element " << j++ << "coordinate: " << sprites_[i]->getRect().y << "Address: " << &(*sprites_[i]) << std::endl;
+        }
+        std::cerr << "---------------------" << std::endl;
+        std::cerr << "Before collision" << std::endl;
         
         if(sprites_.size() > 1){
 
             for(auto i = 0; i < sprites_.size() - 1; i++){
-        
-                for(auto j = i + 1; i < sprites_.size(); i++){
-            
+                for(auto j = (i + 1); j < sprites_.size(); j++){
                     sprite_ptr first = sprites_.at(i);
                     sprite_ptr second = sprites_.at(j);
-                    // bool collided = first->hasCollided(&first->getRect(), &second->getRect());
-                    if (!(*first == *second)) {
-                        // std::cerr << "De är lika" << std::endl;
+                    
+                    //// Varför kollision?
+                    //if (!((*first) == (*second))) {
                         bool collided = first->hasCollided(&first->getRect(), &second->getRect());
                         if (collided) {
                             first->getCollisionBehaviour();
                             second->getCollisionBehaviour();
                         }
-                    }else{
-                        // std::cerr << "De är lika, konstigt"<< std::endl;
-                    }
+                    //}    
+                    //else{
+                    //    std::cerr << "Lika i: " << &(*first) << " & j: " << &(*second) << std::endl;
                     
-                }
-            }
-        } 
+                        // SDL_Rect rect1 = first->getRect();
+                        // SDL_Rect rect2 = second->getRect();
+                        // std::printf("Rect 1: x: %d, y: %d, w: %d, h: %d\n", rect1.x, rect1.y, rect1.w, rect1.h);
+                        // std::printf("Rect 2: x: %d, y: %d, w: %d, h: %d\n", rect2.x, rect2.y, rect2.w, rect2.h);
+                    //}
+                } // inner for
+            } // outer for
+        }
 
-
+        std::cerr << "After collison" << std::endl;
 
         // std::cerr << "After collision loop" << std::endl;
         for (std::shared_ptr<Sprite> sprite : removed_) {
