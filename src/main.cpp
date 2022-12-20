@@ -1,11 +1,7 @@
 ﻿
-#include "System.h"
 #include "Session.h"
-#include "Constants.h"
 #include "Player.h"
 #include "Enemy.h"
-#include <string>
-#include <memory>
 
 typedef std::pair<std::string, std::string> input_pair;
 

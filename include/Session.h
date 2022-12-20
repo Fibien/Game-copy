@@ -12,11 +12,6 @@
 #include "System.h"
 #include "Player.h"
 
-
-// Testa om dessa fortfarande behövs annars ta bort
-//class Player;
-//class Bullet;
-
 class Session{
 
     typedef std::pair<std::string, std::string> input_pair;
@@ -29,13 +24,10 @@ class Session{
     void addHUD(HUD*);
     void remove(const std::shared_ptr<Sprite>&); 
     void createTexture(std::initializer_list<input_pair> pairs); 
-    
-
     void setWindow(int, int, SDL_Texture*);
-    
-    //void 
     SDL_Texture* getTexture(std::string);
     SDL_Renderer* getRenderer();
+
     // Victory func
     // defeat func
     // collision  
@@ -45,13 +37,13 @@ class Session{
     // Add defeat msgs
 
     private:
+    System syst_;
     bool is_session_running_;
     int max_y_, max_x_;
     //void removeElement(std::vector<Sprite>&, Sprite);
-    System syst_;
 
     std::vector<std::shared_ptr<Sprite> > sprites_;
-    // Använda unique_ptr på player
+    // Använda unique_ptr på player ??
     std::vector<std::shared_ptr<Player> > players_;
     std::vector<HUD*> HUDs_;
     std::vector<std::shared_ptr<Sprite> > added_;

@@ -9,18 +9,19 @@
 class Bullet : public Sprite , public std::enable_shared_from_this<Bullet>{
 
     public:
-    static std::shared_ptr<Bullet> getInstance(int, int, int, int, SDL_Texture*);
     ~Bullet();
+    static std::shared_ptr<Bullet> getInstance(int, int, int, int, SDL_Texture*);
     void draw();
     void tick();
     bool toBeRemoved() {return remove;}
     void getCollisionBehaviour();
 
-
-    Bullet(int, int, int, int, SDL_Texture*);    
     protected:
+    // Ctr moved from public to protected
+    Bullet(int, int, int, int, SDL_Texture*);  
 
     private:
+    // Ha kvar?
     bool remove{false};
 
 };

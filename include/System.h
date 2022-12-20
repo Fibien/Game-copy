@@ -18,11 +18,9 @@ class System{
     SDL_Texture* getTexture(std::string);
     void setWindow(int, int, SDL_Texture*);
 
-
     private:
     std::string title;
     int test = 0;
-    // Ha kvar konstanterna?
     SDL_Window *window_;
     SDL_Renderer *ren_;
     SDL_Texture* txt_;

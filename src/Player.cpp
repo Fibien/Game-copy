@@ -1,13 +1,7 @@
 ﻿
 // Ta bort iostream efter testning
 #include <iostream>
-#include <string>
-#include <functional>
 #include <memory>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include "System.h"
-#include "Sprite.h"
 #include "Player.h"
 #include "Bullet.h"
 
@@ -17,7 +11,8 @@ Player::~Player(){
 }
 
 std::shared_ptr<Player> Player::getInstance(int x, int y, int h, int w, SDL_Texture* texture) {
-    return std::make_shared<Player>(x, y, h, w, texture);
+    //return std::make_shared<Player>(x, y, h, w, texture);
+    return std::shared_ptr<Player>(new Player(x, y, h, w, texture));
 }
 
 void Player::keyDown(SDL_Event& eve, int max_x_){

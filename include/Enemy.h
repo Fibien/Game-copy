@@ -14,6 +14,9 @@ class Enemy : public Sprite, public std::enable_shared_from_this<Enemy> {
     void reachGoal();
     void getCollisionBehaviour();
     //bool enemyInFront();
+
+    protected:
+     // Ctr moved from public to protected
     Enemy(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x, y, height, width, texture) {}
    
     
