@@ -30,10 +30,10 @@ class Session{
     public:
     Session(int, int, std::string, std::string);
     void run();
-    void addSprite(Sprite*);
+    // void addSprite(Sprite*);
     void addPlayer(Player*);
     void addHUD(HUD*);
-    void remove(Sprite*);
+    // void remove(Sprite*);
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
     SDL_Renderer* getRenderer();
@@ -41,15 +41,13 @@ class Session{
     // defeat func
     // collision  
 
-    void remove(Sprite&);
+    // void remove(Sprite&);
     // Add victory msgs
     // Add defeat msgs
 
-    // Test
-    void addSpriteSmart(const std::shared_ptr<Sprite>&);    
-    void removedTest(const std::shared_ptr<Sprite> &sprite) {
-        removedTest_.push_back(std::move(sprite));
-    }
+
+    void addSprite(const std::shared_ptr<Sprite>&);    
+    void remove(const std::shared_ptr<Sprite>&); 
 
     private:
     bool is_session_running_;
@@ -57,16 +55,16 @@ class Session{
     //void removeElement(std::vector<Sprite>&, Sprite);
     System syst_;
 
-    std::vector<Sprite*> sprites;
+    std::vector<std::shared_ptr<Sprite> > sprites_;
     std::vector<Player*> players_;
     std::vector<HUD*> HUDs_;
-    std::vector<Sprite*> added;
-    std::vector<Sprite*> removed_;
-
+    std::vector<std::shared_ptr<Sprite> > added_;
+    std::vector<std::shared_ptr<Sprite> > removed_;
+    //std::vector<std::shared_ptr<Player> > players_;
     // Test vectors
-    std::vector<std::shared_ptr<Sprite> > bulletTest_;
-    std::vector<std::shared_ptr<Sprite> > removedTest_;
-    std::vector<std::shared_ptr<Sprite> > addedTest_;
+    // std::vector<std::shared_ptr<Sprite> > sprites_;
+    // std::vector<std::shared_ptr<Sprite> > removed_;
+    // std::vector<std::shared_ptr<Sprite> > added_;
 };
 
 extern Session ses;

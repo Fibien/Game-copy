@@ -39,7 +39,7 @@ void Player::keyUp(SDL_Event& eve, int x) {
         std::shared_ptr<Sprite> bullet = Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex);
         std::cout << "count in Player " << bullet.use_count() << std::endl;
         std::cout << "count in Player again" << bullet.use_count() << std::endl;
-        ses.addSpriteSmart(std::move(bullet));
+        ses.addSprite(std::move(bullet));
         std::cout << "count in Player after adding " << bullet.use_count() << std::endl;
     }
 }

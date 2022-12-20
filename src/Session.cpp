@@ -55,12 +55,7 @@ void Session::run(){
 
         SDL_RenderClear(syst_.getRenderer());
 
-        // Tick i en metod
-        //  Tick för sprites
-        // for (Sprite *sprite : sprites) 
-        //    sprite->tick();
-        // int c = 1;
-        for (auto sprite : bulletTest_) {
+        for (auto sprite : sprites_) {
             // std::cout << "Bullet " << c << std::endl; 
             sprite->tick();
             // c++;
@@ -72,33 +67,22 @@ void Session::run(){
         //     sprites.push_back(sprite);   
         // added.clear();
 
-        for (auto sprite : addedTest_) {
-            bulletTest_.push_back(std::move(sprite));
+        for (auto sprite : added_) {
+            sprites_.push_back(std::move(sprite));
 
         }
-        addedTest_.clear();       
-        // Remove i en metod
-        // for (Sprite* sprite : removed_) {
-        //     for (auto i = sprites.begin(); i != sprites.end();) {
-        //         if (*i == sprite) {
-        //             i = sprites.erase(i);
-        //         } else {
-        //             i++;
-        //         }
-        //     }
-        // }
-        // removed_.clear();       
-        
+        added_.clear();       
+     
         // Test method to remove bullets
         int nr = 0;
 
-        for (std::shared_ptr<Sprite> sprite : removedTest_) {
-            for(std::vector<std::shared_ptr<Sprite>>::iterator i = bulletTest_.begin(); i != bulletTest_.end();){
+        for (std::shared_ptr<Sprite> sprite : removed_) {
+            for(std::vector<std::shared_ptr<Sprite>>::iterator i = sprites_.begin(); i != sprites_.end();){
                 std::cout << "Sprite: " << nr++ << std::endl;
                 std::cout << "Count: "<< sprite.use_count() << std::endl;
                 if(*i == sprite){
                     std::cout << "De är lika" << std::endl;
-                    i = bulletTest_.erase(i);
+                    i = sprites_.erase(i);
                 }
                 else{
                     i++;
@@ -107,7 +91,7 @@ void Session::run(){
                 std::cout << "Count: "<< sprite.use_count() << std::endl;
             }
         }
-        removedTest_.clear();
+        removed_.clear();
 
         SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
 
@@ -115,7 +99,7 @@ void Session::run(){
         // for (Sprite *sprite : sprites)
         //    sprite->draw();
 
-        for (auto sprite : bulletTest_) {
+        for (auto sprite : sprites_) {
             sprite->draw();
 
         }
@@ -139,12 +123,12 @@ void Session::run(){
 
 
 // Test
-void Session::addSpriteSmart(const std::shared_ptr<Sprite>& sprite) {
-    addedTest_.push_back(std::move(sprite));
+void Session::addSprite(const std::shared_ptr<Sprite>& sprite) {
+    added_.push_back(std::move(sprite));
 }
 
-void Session::addSprite(Sprite* sprite){
-    added.push_back(sprite);
+void Session::remove(const std::shared_ptr<Sprite> &sprite) {
+    removed_.push_back(std::move(sprite));
 }
 
 // Kolla om de pekar på samma obj
@@ -162,9 +146,7 @@ void Session::addHUD(HUD* hud){
     HUDs_.push_back(hud);
 }
 
-void Session::remove(Sprite* sprite){
-    removed_.push_back(sprite);
-}
+
 
 void Session::createTexture(std::initializer_list<input_pair> pairs){
     syst_.createTexture(pairs);

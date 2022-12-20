@@ -27,7 +27,7 @@ void Bullet::draw() {
 void Bullet::tick() {
     if (getRect().y <= 0) {
         //ses.remove(this);
-        ses.removedTest(shared_from_this());
+        ses.remove(shared_from_this());
     } else 
         getRect().y--;
 }
