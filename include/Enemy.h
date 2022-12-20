@@ -3,22 +3,20 @@
 
 #include "Sprite.h"
 #include <SDL2/SDL.h>
+#include <memory>
 
-class Enemy : public Sprite {
+class Enemy : public Sprite, public std::enable_shared_from_this<Enemy> {
 
     public:
-    static Enemy* getInstance(int, int, int, int, SDL_Texture*);
+    static std::shared_ptr<Enemy> getInstance(int, int, int, int, SDL_Texture*);
+    ~Enemy();
     void tick();
     void draw();
-    ~Enemy();
-
     void reachGoal();
-    bool enemyInFront();
-
-    protected:
+    void getCollisionBehaviour();
+    //bool enemyInFront();
     Enemy(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x, y, height, width, texture) {}
-
-    private:
+   
     
 };
 

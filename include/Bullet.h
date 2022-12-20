@@ -7,9 +7,6 @@
 #include <SDL2/SDL.h>
 #include <memory>
 
-// Prova att kommentera av, ta bort om möjligt
-class Session;
-
 class Bullet : public Sprite , public std::enable_shared_from_this<Bullet>{
 
     public:
@@ -18,6 +15,8 @@ class Bullet : public Sprite , public std::enable_shared_from_this<Bullet>{
     void draw();
     void tick();
     bool toBeRemoved() {return remove;}
+    void getCollisionBehaviour();
+
 
     Bullet(int, int, int, int, SDL_Texture*);    
     protected:

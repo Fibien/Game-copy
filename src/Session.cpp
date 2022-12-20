@@ -9,13 +9,13 @@
 #include <vector>
 
 #define FPS 60
-//#include "Pl"
+
+typedef std::shared_ptr<Sprite> sprite_ptr;
 
 Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y, title, path){
     max_x_ = x;
     max_y_ = y;
 }
-
 
 void Session::run(){
 
@@ -34,7 +34,7 @@ void Session::run(){
             switch(event.type){
             
                 case SDL_KEYUP: {
-                    for(Player *player : players_){
+                    for(std::shared_ptr<Player> player : players_){
                         player->keyUp(event, max_x_);
                         // std::cout << "Crashing" << std::endl;
                     }  
@@ -42,7 +42,7 @@ void Session::run(){
                 }
 
                 case SDL_KEYDOWN: {
-                    for(Player *player : players_){
+                    for(std::shared_ptr<Player> player : players_){
                         //player->keyDown(event, max_x_, this); 
                         player->keyDown(event, max_x_);
                     }   
@@ -56,39 +56,59 @@ void Session::run(){
         SDL_RenderClear(syst_.getRenderer());
 
         for (auto sprite : sprites_) {
-            // std::cout << "Bullet " << c << std::endl; 
             sprite->tick();
-            // c++;
         }
 
         // Lägga till element i en metod
         // // Lägga till element (och HUD?)
-        // for (Sprite *sprite : added)
-        //     sprites.push_back(sprite);   
-        // added.clear();
-
+ 
+        // std::cerr << "Size of added " << added_.size() << std::endl;
+        // std::cerr << "Size before adding " << sprites_.size() << std::endl;
         for (auto sprite : added_) {
             sprites_.push_back(std::move(sprite));
-
         }
+        // std::cerr << "Size After adding " << sprites_.size() << std::endl;
         added_.clear();       
-     
-        // Test method to remove bullets
-        int nr = 0;
+        
 
+        
+        if(sprites_.size() > 1){
+
+            for(auto i = 0; i < sprites_.size() - 1; i++){
+        
+                for(auto j = i + 1; i < sprites_.size(); i++){
+            
+                    sprite_ptr first = sprites_.at(i);
+                    sprite_ptr second = sprites_.at(j);
+                    // bool collided = first->hasCollided(&first->getRect(), &second->getRect());
+                    if (!(*first == *second)) {
+                        // std::cerr << "De är lika" << std::endl;
+                        bool collided = first->hasCollided(&first->getRect(), &second->getRect());
+                        if (collided) {
+                            first->getCollisionBehaviour();
+                            second->getCollisionBehaviour();
+                        }
+                    }else{
+                        // std::cerr << "De är lika, konstigt"<< std::endl;
+                    }
+                    
+                }
+            }
+        } 
+
+
+
+        // std::cerr << "After collision loop" << std::endl;
         for (std::shared_ptr<Sprite> sprite : removed_) {
             for(std::vector<std::shared_ptr<Sprite>>::iterator i = sprites_.begin(); i != sprites_.end();){
-                std::cout << "Sprite: " << nr++ << std::endl;
-                std::cout << "Count: "<< sprite.use_count() << std::endl;
                 if(*i == sprite){
-                    std::cout << "De är lika" << std::endl;
+                    // std::cout << "De är lika" << std::endl;
                     i = sprites_.erase(i);
                 }
                 else{
                     i++;
-                    std::cout << "De är olika" << std::endl;
+                    // std::cout << "De är olika" << std::endl;
                 }
-                std::cout << "Count: "<< sprite.use_count() << std::endl;
             }
         }
         removed_.clear();
@@ -96,17 +116,12 @@ void Session::run(){
         SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
 
         // de olika draw i en eller flera metoder
-        // for (Sprite *sprite : sprites)
-        //    sprite->draw();
 
         for (auto sprite : sprites_) {
             sprite->draw();
-
         }
 
-
-
-        for(Player *player : players_){
+        for(std::shared_ptr<Player> player : players_){
             player->draw();
         }
 
@@ -132,7 +147,7 @@ void Session::remove(const std::shared_ptr<Sprite> &sprite) {
 }
 
 // Kolla om de pekar på samma obj
-void Session::addPlayer(Player *player){
+void Session::addPlayer(std::shared_ptr<Player> player){
     if(is_session_running_){
         throw std::invalid_argument("Players can't be added during runtime");
     }
@@ -145,8 +160,6 @@ void Session::addHUD(HUD* hud){
     }
     HUDs_.push_back(hud);
 }
-
-
 
 void Session::createTexture(std::initializer_list<input_pair> pairs){
     syst_.createTexture(pairs);

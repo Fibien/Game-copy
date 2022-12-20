@@ -14,8 +14,8 @@ Player::~Player(){
     //SDL_DestroyTexture(getTexture());
 }
 
-Player* Player::getInstance(int x, int y, int h, int w, SDL_Texture* texture) {
-    return new Player(x, y, h, w, texture);
+std::shared_ptr<Player> Player::getInstance(int x, int y, int h, int w, SDL_Texture* texture) {
+    return std::make_shared<Player>(x, y, h, w, texture);
 }
 
 void Player::keyDown(SDL_Event& eve, int max_x_){
@@ -35,12 +35,11 @@ void Player::keyDown(SDL_Event& eve, int max_x_){
 void Player::keyUp(SDL_Event& eve, int x) {  
     if(eve.key.keysym.sym == SDLK_SPACE) {
                                                                                                             // Magic number
+
+                                                                                    //    std::cout << "Skott" << std::endl;     
         SDL_Texture* tex = ses.getTexture("Bullet");
         std::shared_ptr<Sprite> bullet = Bullet::getInstance((this->getRect().x + (this->getRect().w/2)), this->getRect().y+10, 10, 20, tex);
-        std::cout << "count in Player " << bullet.use_count() << std::endl;
-        std::cout << "count in Player again" << bullet.use_count() << std::endl;
         ses.addSprite(std::move(bullet));
-        std::cout << "count in Player after adding " << bullet.use_count() << std::endl;
     }
 }
 

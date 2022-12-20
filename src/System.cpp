@@ -38,11 +38,6 @@ void System::createTexture(std::initializer_list<input_pair> pairs){
 }
     
 SDL_Texture* System::getTexture(std::string key) {
+    std::cerr << "Hämtning nr: " << test++ << std::endl;
     return textures_.at(key);
 }
-
-// Ta bort?
-const std::string System::default_background_ = "./images/Background.jpg";
-const std::string System::default_title_ = "Game";
-const int System::default_height_ = 800;
-const int System::default_width_ = 600;

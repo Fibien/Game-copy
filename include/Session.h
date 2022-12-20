@@ -8,20 +8,20 @@
 
 #include "Sprite.h"
 #include "System.h"
-// #include "Player.h"
 #include "HUD.h"
 #include <vector>
 #include <unordered_map>
 #include <SDL2/SDL.h>
 #include <string>
-// #include "Bullet.h"
 #include <functional>
 #include <memory>
+#include "Player.h"
+#include "Bullet.h"
 
 
 // Testa om dessa fortfarande behövs annars ta bort
-class Player;
-class Bullet;
+//class Player;
+//class Bullet;
 
 class Session{
 
@@ -30,10 +30,10 @@ class Session{
     public:
     Session(int, int, std::string, std::string);
     void run();
-    // void addSprite(Sprite*);
-    void addPlayer(Player*);
+    void addSprite(const std::shared_ptr<Sprite>&); 
+    void addPlayer(std::shared_ptr<Player>);
     void addHUD(HUD*);
-    // void remove(Sprite*);
+    void remove(const std::shared_ptr<Sprite>&); 
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
     SDL_Renderer* getRenderer();
@@ -45,10 +45,6 @@ class Session{
     // Add victory msgs
     // Add defeat msgs
 
-
-    void addSprite(const std::shared_ptr<Sprite>&);    
-    void remove(const std::shared_ptr<Sprite>&); 
-
     private:
     bool is_session_running_;
     int max_y_, max_x_;
@@ -56,15 +52,12 @@ class Session{
     System syst_;
 
     std::vector<std::shared_ptr<Sprite> > sprites_;
-    std::vector<Player*> players_;
+    // Använda unique_ptr på player
+    std::vector<std::shared_ptr<Player> > players_;
     std::vector<HUD*> HUDs_;
     std::vector<std::shared_ptr<Sprite> > added_;
     std::vector<std::shared_ptr<Sprite> > removed_;
-    //std::vector<std::shared_ptr<Player> > players_;
-    // Test vectors
-    // std::vector<std::shared_ptr<Sprite> > sprites_;
-    // std::vector<std::shared_ptr<Sprite> > removed_;
-    // std::vector<std::shared_ptr<Sprite> > added_;
+
 };
 
 extern Session ses;

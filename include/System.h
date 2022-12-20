@@ -20,11 +20,8 @@ class System{
     // Implementera en start metod som sätter upplösning och bakgrund alt gör en setResolution och setBackground metod
 
     private:
+    int test = 0;
     // Ha kvar konstanterna?
-    const static std::string default_background_;
-    const static std::string default_title_;
-    const static int default_height_;
-    const static int default_width_;
     SDL_Window *window_;
     SDL_Renderer *ren_;
     SDL_Texture* txt_;

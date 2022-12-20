@@ -16,9 +16,12 @@ class Sprite{
     virtual ~Sprite() {std::cout << "Sprite destructor" << std::endl;};
     virtual void draw() = 0;
     virtual void tick() = 0;
+    virtual void getCollisionBehaviour() {  }
     SDL_Rect& getRect() { return rect_; }
-    bool isRemovable() const { return is_removable_;}
     SDL_Texture* getTexture() const { return texture_; };
+    bool hasCollided(const SDL_Rect*, const SDL_Rect*);
+    bool operator==(const Sprite&);
+    
 
     protected:
     Sprite(int, int, int, int, SDL_Texture*);
