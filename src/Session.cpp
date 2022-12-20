@@ -34,7 +34,8 @@ void Session::run(){
 
         handleCreatedElements();
 
-        removeElements();
+        handleCollision();
+
         
         // if(sprites_.size() > 1){
 
@@ -192,7 +193,7 @@ void Session::handleCreatedElements(){
     added_.clear();   
 }
 
-void Session::removeElements(){
+void Session::handleCollision(){
 
      if(sprites_.size() > 1){
 
