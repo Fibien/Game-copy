@@ -23,7 +23,6 @@ System::~System(){
     SDL_Quit();
 }
 
-
 void System::createTexture(std::initializer_list<input_pair> pairs){
 
     for(input_pair pair : pairs){
