@@ -5,6 +5,8 @@
 #include "Sprite.h"
 #include "Player.h"
 #include <iostream>
+#include <memory>
+#include <vector>
 
 #define FPS 60
 //#include "Pl"
@@ -24,7 +26,7 @@ void Session::run(){
 
     while(!quit){
 
-        // Uint32 next_tick = SDL_GetTicks() + tick_interval;
+        Uint32 next_tick = SDL_GetTicks() + tick_interval;
         SDL_Event event;
         while(SDL_PollEvent(&event)){
             
@@ -55,32 +57,69 @@ void Session::run(){
 
         // Tick i en metod
         //  Tick för sprites
-        for (Sprite *sprite : sprites) 
-           sprite->tick();
-  
+        // for (Sprite *sprite : sprites) 
+        //    sprite->tick();
+        // int c = 1;
+        for (auto sprite : bulletTest_) {
+            // std::cout << "Bullet " << c << std::endl; 
+            sprite->tick();
+            // c++;
+        }
+
         // Lägga till element i en metod
         // // Lägga till element (och HUD?)
-        for (Sprite *sprite : added)
-            sprites.push_back(sprite);   
-        added.clear();
-       
+        // for (Sprite *sprite : added)
+        //     sprites.push_back(sprite);   
+        // added.clear();
+
+        for (auto sprite : addedTest_) {
+            bulletTest_.push_back(std::move(sprite));
+
+        }
+        addedTest_.clear();       
         // Remove i en metod
-        for (Sprite* sprite : removed_) {
-            for (auto i = sprites.begin(); i != sprites.end();) {
-                if (*i == sprite) {
-                    i = sprites.erase(i);
-                } else {
-                    i++;
+        // for (Sprite* sprite : removed_) {
+        //     for (auto i = sprites.begin(); i != sprites.end();) {
+        //         if (*i == sprite) {
+        //             i = sprites.erase(i);
+        //         } else {
+        //             i++;
+        //         }
+        //     }
+        // }
+        // removed_.clear();       
+        
+        // Test method to remove bullets
+        int nr = 0;
+
+        for (std::shared_ptr<Sprite> sprite : removedTest_) {
+            for(std::vector<std::shared_ptr<Sprite>>::iterator i = bulletTest_.begin(); i != bulletTest_.end();){
+                std::cout << "Sprite: " << nr++ << std::endl;
+                std::cout << "Count: "<< sprite.use_count() << std::endl;
+                if(*i == sprite){
+                    std::cout << "De är lika" << std::endl;
+                    i = bulletTest_.erase(i);
                 }
+                else{
+                    i++;
+                    std::cout << "De är olika" << std::endl;
+                }
+                std::cout << "Count: "<< sprite.use_count() << std::endl;
             }
         }
-        removed_.clear();       
-        
+        removedTest_.clear();
+
         SDL_RenderCopy(syst_.getRenderer(), syst_.getBackgroundTexture(), NULL, NULL);
 
         // de olika draw i en eller flera metoder
-        for (Sprite *sprite : sprites)
-           sprite->draw();
+        // for (Sprite *sprite : sprites)
+        //    sprite->draw();
+
+        for (auto sprite : bulletTest_) {
+            sprite->draw();
+
+        }
+
 
 
         for(Player *player : players_){
@@ -89,15 +128,20 @@ void Session::run(){
 
         SDL_RenderPresent(syst_.getRenderer());
         // FPS delay
-        /*
+        
         int delay = next_tick - SDL_GetTicks();
         if (delay > 0) {
             SDL_Delay(delay);
-        }*/
+        }
 
     } // End outer while
 } // End run
 
+
+// Test
+void Session::addSpriteSmart(const std::shared_ptr<Sprite>& sprite) {
+    addedTest_.push_back(std::move(sprite));
+}
 
 void Session::addSprite(Sprite* sprite){
     added.push_back(sprite);

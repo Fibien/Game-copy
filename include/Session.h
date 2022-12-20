@@ -16,6 +16,7 @@
 #include <string>
 // #include "Bullet.h"
 #include <functional>
+#include <memory>
 
 
 // Testa om dessa fortfarande behövs annars ta bort
@@ -44,6 +45,12 @@ class Session{
     // Add victory msgs
     // Add defeat msgs
 
+    // Test
+    void addSpriteSmart(const std::shared_ptr<Sprite>&);    
+    void removedTest(const std::shared_ptr<Sprite> &sprite) {
+        removedTest_.push_back(std::move(sprite));
+    }
+
     private:
     bool is_session_running_;
     int max_y_, max_x_;
@@ -55,6 +62,11 @@ class Session{
     std::vector<HUD*> HUDs_;
     std::vector<Sprite*> added;
     std::vector<Sprite*> removed_;
+
+    // Test vectors
+    std::vector<std::shared_ptr<Sprite> > bulletTest_;
+    std::vector<std::shared_ptr<Sprite> > removedTest_;
+    std::vector<std::shared_ptr<Sprite> > addedTest_;
 };
 
 extern Session ses;
