@@ -21,8 +21,7 @@ class Sprite{
     SDL_Texture* getTexture() const { return texture_; };
     bool hasCollided(const SDL_Rect*, const SDL_Rect*);
     bool operator==(const Sprite&);
-    
-
+ 
     protected:
     Sprite(int, int, int, int, SDL_Texture*);
     

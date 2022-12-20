@@ -73,12 +73,12 @@ void Session::run(){
         // std::cerr << "Size After adding " << sprites_.size() << std::endl;
         added_.clear();       
         
-        int j = 0;
-        for (int i = 0; i < sprites_.size(); i++) {
-            std::cerr << "Element " << j++ << "coordinate: " << sprites_[i]->getRect().y << "Address: " << &(*sprites_[i]) << std::endl;
-        }
-        std::cerr << "---------------------" << std::endl;
-        std::cerr << "Before collision" << std::endl;
+        // int j = 0;
+        // for (int i = 0; i < sprites_.size(); i++) {
+        //     std::cerr << "Element " << j++ << "coordinate: " << sprites_[i]->getRect().y << "Address: " << &(*sprites_[i]) << std::endl;
+        // }
+        // std::cerr << "---------------------" << std::endl;
+        // std::cerr << "Before collision" << std::endl;
         
         if(sprites_.size() > 1){
 
@@ -107,7 +107,7 @@ void Session::run(){
             } // outer for
         }
 
-        std::cerr << "After collison" << std::endl;
+        // std::cerr << "After collison" << std::endl;
 
         // std::cerr << "After collision loop" << std::endl;
         for (std::shared_ptr<Sprite> sprite : removed_) {
@@ -176,6 +176,10 @@ void Session::createTexture(std::initializer_list<input_pair> pairs){
     syst_.createTexture(pairs);
 }
 
+void Session::setWindow(int height, int width, SDL_Texture* texture) {
+    syst_.setWindow(height, width, texture);
+}
+
 SDL_Texture* Session::getTexture(std::string key){
     return syst_.getTexture(key);
 }
@@ -183,6 +187,7 @@ SDL_Texture* Session::getTexture(std::string key){
 SDL_Renderer* Session::getRenderer() {
     return syst_.getRenderer();
 }
+
 
 //Förslag på ändring, gör att vi blir av med några magic number
 //Session ses(800, 600, "game", "./images/Background.jpg");

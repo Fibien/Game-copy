@@ -17,9 +17,11 @@ class System{
     SDL_Texture* getBackgroundTexture() {return txt_;};
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
-    // Implementera en start metod som sätter upplösning och bakgrund alt gör en setResolution och setBackground metod
+    void setWindow(int, int, SDL_Texture*);
+
 
     private:
+    std::string title;
     int test = 0;
     // Ha kvar konstanterna?
     SDL_Window *window_;

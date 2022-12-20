@@ -34,7 +34,11 @@ class Session{
     void addPlayer(std::shared_ptr<Player>);
     void addHUD(HUD*);
     void remove(const std::shared_ptr<Sprite>&); 
-    void createTexture(std::initializer_list<input_pair> pairs);
+    void createTexture(std::initializer_list<input_pair> pairs); 
+    
+
+    void setWindow(int, int, SDL_Texture*);
+    
     //void 
     SDL_Texture* getTexture(std::string);
     SDL_Renderer* getRenderer();
