@@ -25,31 +25,8 @@ void Session::run(){
 
         Uint32 next_tick = SDL_GetTicks() + tick_interval;
         SDL_Event event;
-        while(SDL_PollEvent(&event)){
-            
-            // Sätt switch event i en metod
-            switch(event.type){
-            
-                case SDL_KEYUP: {
-                    for(std::shared_ptr<Player> player : players_){
-                        player->keyUp(event, max_x_);
-                        // std::cout << "Crashing" << std::endl;
-                    }  
-                break;
-                }
 
-                case SDL_KEYDOWN: {
-                    for(std::shared_ptr<Player> player : players_){
-                        //player->keyDown(event, max_x_, this); 
-                        player->keyDown(event, max_x_);
-                    }   
-                    break;
-                }
-                // Ersätter quit med is_session_running_
-                case SDL_QUIT: is_session_running_ = false; break;
-        
-            } // End of switch
-        } // End of inner while loop
+        handleEvent(event);
 
         SDL_RenderClear(syst_.getRenderer());
 
@@ -179,6 +156,36 @@ void Session::remove(const std::shared_ptr<Sprite> &sprite) {
 
 void Session::setWindow(int height, int width, SDL_Texture* texture) {
     syst_.setWindow(height, width, texture);
+}
+
+void Session::handleEvent(SDL_Event& event){
+
+       while(SDL_PollEvent(&event)){
+            
+            // Sätt switch event i en metod
+            switch(event.type){
+            
+                case SDL_KEYUP: {
+                    for(std::shared_ptr<Player> player : players_){
+                        player->keyUp(event, max_x_);
+                        // std::cout << "Crashing" << std::endl;
+                    }  
+                break;
+                }
+
+                case SDL_KEYDOWN: {
+                    for(std::shared_ptr<Player> player : players_){
+                        //player->keyDown(event, max_x_, this); 
+                        player->keyDown(event, max_x_);
+                    }   
+                    break;
+                }
+                // Ersätter quit med is_session_running_
+                case SDL_QUIT: is_session_running_ = false; break;
+        
+            } // End of switch
+        } // End of inner while loop
+
 }
 
 Session ses(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_TITLE, DEFAULT_BACKGROUND);

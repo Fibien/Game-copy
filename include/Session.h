@@ -37,11 +37,23 @@ class Session{
     // Add defeat msgs
 
     private:
+    void handleSession(Uint32, bool);
+    void handleEvent(SDL_Event&);
+    void clearRenderer();
+    void handleTick();
+    void handleCreatedElements();
+    void handleCollision();
+    void removeElements();
+    void renderBackground();
+    void invokeDraw();
+    void displayElements();
+    Uint32 determineDelay(Uint32);
+    void createDelay(Uint32);
     System syst_;
     bool is_session_running_;
     // Ha kvar max_y?
     int max_y_, max_x_;
-    //void removeElement(std::vector<Sprite>&, Sprite);
+    //void removeElement(std::vector<Sprite>&, Sprite); // Ha kvar metoden?
 
     std::vector<std::shared_ptr<Sprite> > sprites_;
     // Använda unique_ptr på player ??
