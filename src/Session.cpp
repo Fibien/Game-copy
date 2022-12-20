@@ -28,56 +28,40 @@ void Session::run(){
 
         handleEvent(event);
 
-        SDL_RenderClear(syst_.getRenderer());
+        clearRenderer();
 
-        for (auto sprite : sprites_) {
-            sprite->tick();
-        }
+        handleTick();
 
-        // Lägga till element i en metod
-        // // Lägga till element (och HUD?)
- 
-        // std::cerr << "Size of added " << added_.size() << std::endl;
-        // std::cerr << "Size before adding " << sprites_.size() << std::endl;
-        for (auto sprite : added_) {
-            sprites_.push_back(std::move(sprite));
-        }
-        // std::cerr << "Size After adding " << sprites_.size() << std::endl;
-        added_.clear();       
+        handleCreatedElements();
+
+        removeElements();
         
-        // int j = 0;
-        // for (int i = 0; i < sprites_.size(); i++) {
-        //     std::cerr << "Element " << j++ << "coordinate: " << sprites_[i]->getRect().y << "Address: " << &(*sprites_[i]) << std::endl;
+        // if(sprites_.size() > 1){
+
+        //     for(LongUInt i = 0; i < sprites_.size() - 1; i++){
+        //         for(LongUInt j = (i + 1); j < sprites_.size(); j++){
+        //             SpritePtr first = sprites_.at(i);
+        //             SpritePtr second = sprites_.at(j);
+                    
+        //             //// Varför kollision?
+        //             //if (!((*first) == (*second))) {
+        //                 bool collided = first->hasCollided(&first->getRect(), &second->getRect());
+        //                 if (collided) {
+        //                     first->getCollisionBehaviour();
+        //                     second->getCollisionBehaviour();
+        //                 }
+        //             //}    
+        //             //else{
+        //             //    std::cerr << "Lika i: " << &(*first) << " & j: " << &(*second) << std::endl;
+                    
+        //                 // SDL_Rect rect1 = first->getRect();
+        //                 // SDL_Rect rect2 = second->getRect();
+        //                 // std::printf("Rect 1: x: %d, y: %d, w: %d, h: %d\n", rect1.x, rect1.y, rect1.w, rect1.h);
+        //                 // std::printf("Rect 2: x: %d, y: %d, w: %d, h: %d\n", rect2.x, rect2.y, rect2.w, rect2.h);
+        //             //}
+        //         } // inner for
+        //     } // outer for
         // }
-        // std::cerr << "---------------------" << std::endl;
-        // std::cerr << "Before collision" << std::endl;
-        
-        if(sprites_.size() > 1){
-
-            for(LongUInt i = 0; i < sprites_.size() - 1; i++){
-                for(LongUInt j = (i + 1); j < sprites_.size(); j++){
-                    SpritePtr first = sprites_.at(i);
-                    SpritePtr second = sprites_.at(j);
-                    
-                    //// Varför kollision?
-                    //if (!((*first) == (*second))) {
-                        bool collided = first->hasCollided(&first->getRect(), &second->getRect());
-                        if (collided) {
-                            first->getCollisionBehaviour();
-                            second->getCollisionBehaviour();
-                        }
-                    //}    
-                    //else{
-                    //    std::cerr << "Lika i: " << &(*first) << " & j: " << &(*second) << std::endl;
-                    
-                        // SDL_Rect rect1 = first->getRect();
-                        // SDL_Rect rect2 = second->getRect();
-                        // std::printf("Rect 1: x: %d, y: %d, w: %d, h: %d\n", rect1.x, rect1.y, rect1.w, rect1.h);
-                        // std::printf("Rect 2: x: %d, y: %d, w: %d, h: %d\n", rect2.x, rect2.y, rect2.w, rect2.h);
-                    //}
-                } // inner for
-            } // outer for
-        }
 
         // std::cerr << "After collison" << std::endl;
 
@@ -186,6 +170,56 @@ void Session::handleEvent(SDL_Event& event){
             } // End of switch
         } // End of inner while loop
 
+}
+
+void Session::clearRenderer(){
+    SDL_RenderClear(syst_.getRenderer());
+}
+
+void Session::handleTick(){
+
+    for (auto sprite : sprites_) {
+            sprite->tick();
+        }
+
+}
+
+void Session::handleCreatedElements(){
+    for (auto sprite : added_) {
+        sprites_.push_back(std::move(sprite));
+    }
+       
+    added_.clear();   
+}
+
+void Session::removeElements(){
+
+     if(sprites_.size() > 1){
+
+            for(LongUInt i = 0; i < sprites_.size() - 1; i++){
+                for(LongUInt j = (i + 1); j < sprites_.size(); j++){
+                    SpritePtr first = sprites_.at(i);
+                    SpritePtr second = sprites_.at(j);
+                    
+                    //// Varför kollision?
+                    //if (!((*first) == (*second))) {
+                        bool collided = first->hasCollided(&first->getRect(), &second->getRect());
+                        if (collided) {
+                            first->getCollisionBehaviour();
+                            second->getCollisionBehaviour();
+                        }
+                    //}    
+                    //else{
+                    //    std::cerr << "Lika i: " << &(*first) << " & j: " << &(*second) << std::endl;
+                    
+                        // SDL_Rect rect1 = first->getRect();
+                        // SDL_Rect rect2 = second->getRect();
+                        // std::printf("Rect 1: x: %d, y: %d, w: %d, h: %d\n", rect1.x, rect1.y, rect1.w, rect1.h);
+                        // std::printf("Rect 2: x: %d, y: %d, w: %d, h: %d\n", rect2.x, rect2.y, rect2.w, rect2.h);
+                    //}
+                } // inner for
+            } // outer for
+        }
 }
 
 Session ses(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_TITLE, DEFAULT_BACKGROUND);
