@@ -5,6 +5,10 @@
 
 Bullet::Bullet(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x,y,height,width, texture){}
 
+Bullet::~Bullet() {
+    std::cout << "Enemy destroyed" << std::endl;
+}
+
 std::shared_ptr<Bullet> Bullet::getInstance(int x, int y, int height, int width, SDL_Texture* texture){
     //return std::make_shared<Bullet>(x,y,height,width,texture);
     return std::shared_ptr<Bullet>(new Bullet(x,y,height,width,texture)); 
@@ -20,13 +24,12 @@ void Bullet::getCollisionBehaviour() {
 
 void Bullet::tick() {
 
-    // Magic number in if and else
-    if (getRect().y <= 0) {
+    int exitWindow = 0;
+    int movement = 10;
+    
+    if (getRect().y <= exitWindow) {
         ses.remove(shared_from_this());
     } else 
-        getRect().y-=10;
+        getRect().y-=movement;
 }
 
-Bullet::~Bullet() {
-    std::cout << "Enemy destroyed" << std::endl;
-}

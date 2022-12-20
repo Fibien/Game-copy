@@ -19,6 +19,4 @@ class Player : public Sprite{
 
 };
 
-
-
 #endif
