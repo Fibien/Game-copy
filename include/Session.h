@@ -1,7 +1,7 @@
 ﻿#ifndef SESSION_H
 #define SESSION_H
 
-#define DEFAULT_BACKGROUND "./images/Background.jpg"
+#define DEFAULT_BACKGROUND "./images/Default_background.jpg"
 #define DEFAULT_TITLE "Game"
 #define DEFAULT_HEIGHT 800
 #define DEFAULT_WIDTH 600
@@ -15,6 +15,7 @@
 class Session{
 
     typedef std::pair<std::string, std::string> input_pair;
+    typedef std::vector<std::shared_ptr<Sprite>>::const_iterator constSpriteIter;
 
     public:
     Session(int, int, std::string, std::string);
@@ -27,6 +28,8 @@ class Session{
     SDL_Renderer* getRenderer(); 
     void remove(const std::shared_ptr<Sprite>&); 
     void setWindow(int, int, SDL_Texture*);
+    int getMaxY() {return syst_.getMaxY();}
+    const std::vector<std::shared_ptr<Sprite>> getSpriteVec() const;
     
     // Victory func
     // defeat func
@@ -50,8 +53,8 @@ class Session{
     void createDelay(int);
     System syst_;
     bool is_session_running_;
-    // Ha kvar max_y?
-    int max_y_, max_x_;
+   
+    //int max_y_, max_x_;
 
     std::vector<std::shared_ptr<Sprite> > sprites_;
     // Använda unique_ptr på player ??

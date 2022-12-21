@@ -38,11 +38,12 @@ void Player::keyUp(SDL_Event& eve, int x) {
                                                                                                                                                                      
         SDL_Texture* tex = ses.getTexture("Bullet");
         int xMovement = this->getRect().x + (this->getRect().w/2);
-        int yMovement = this->getRect().y + 10;   
+        int yMovement = this->getRect().y - 10;   
         int width = 10;
         int height = 20;
+        bool friendly = true;
 
-        ses.addSprite(Bullet::getInstance(xMovement, yMovement, width, height, tex));
+        ses.addSprite(Bullet::getInstance(xMovement, yMovement, width, height, tex, friendly));
     }
 }
 

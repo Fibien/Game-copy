@@ -17,8 +17,22 @@ class Enemy : public Sprite, public std::enable_shared_from_this<Enemy> {
 
     protected:
      // Ctr moved from public to protected
-    Enemy(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x, y, height, width, texture) {}
+    Enemy(int x, int y, int height, int width, SDL_Texture* texture) : height(height), Sprite(x, y, height, width, texture) {}
+
+    private:
+    static int shoot;
+    static int rng;
+    int move_count_{0};
+    int move_tickCount_{0};
+    int fire_tickCount{1};
+    int height;
+    bool goRight_{true};
+    bool goDown_{false};
+    void moveEnemy();
+    
    
 };
+
+
 
 #endif

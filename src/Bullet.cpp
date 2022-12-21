@@ -1,17 +1,19 @@
 ﻿
 // Recommended order of include iostream, rest of standard library, third-party library, local files
-#include <iostream>
 #include "Bullet.h"
+// Testing
+#include <iostream>
 
-Bullet::Bullet(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x,y,height,width, texture){}
+
+Bullet::Bullet(int x, int y, int height, int width, SDL_Texture* texture, bool shotFromPlayer) : Sprite(x,y,height,width, texture), shotFromPlayer(shotFromPlayer) {}
 
 Bullet::~Bullet() {
-    std::cout << "Enemy destroyed" << std::endl;
+    std::cout << "Bullet destroyed" << std::endl;
 }
 
-std::shared_ptr<Bullet> Bullet::getInstance(int x, int y, int height, int width, SDL_Texture* texture){
+std::shared_ptr<Bullet> Bullet::getInstance(int x, int y, int height, int width, SDL_Texture* texture, bool shotFromPlayer){
     //return std::make_shared<Bullet>(x,y,height,width,texture);
-    return std::shared_ptr<Bullet>(new Bullet(x,y,height,width,texture)); 
+    return std::shared_ptr<Bullet>(new Bullet(x,y,height,width,texture, shotFromPlayer)); 
 }
 
 void Bullet::draw() {
@@ -24,12 +26,27 @@ void Bullet::getCollisionBehaviour() {
 
 void Bullet::tick() {
 
-    int exitWindow = 0;
-    int movement = 10;
-    
-    if (getRect().y <= exitWindow) {
-        ses.remove(shared_from_this());
-    } else 
-        getRect().y-=movement;
+    if(shotFromPlayer){
+
+        int exitWindow = 0;
+        int movement = 7;
+
+        if (getRect().y <= exitWindow) {
+            ses.remove(shared_from_this());
+        } else 
+            getRect().y-=movement;
+
+    } else{
+            
+        int exitWindow = ses.getMaxY();
+        int movement = 3;
+
+        if (getRect().y >= exitWindow) {
+            ses.remove(shared_from_this());
+        } else 
+            getRect().y+=movement;
+    }
 }
+
+
 

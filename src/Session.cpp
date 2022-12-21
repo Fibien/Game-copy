@@ -12,8 +12,8 @@ typedef std::vector<std::shared_ptr<Sprite>>::iterator SpriteVectorIterator;
 typedef long long unsigned int LongUInt;
 
 Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y, title, path){
-    max_x_ = x;
-    max_y_ = y;
+    //max_x_ = x;
+    //max_y_ = y;
 }
 
 void Session::run(){
@@ -88,6 +88,10 @@ void Session::setWindow(int height, int width, SDL_Texture* texture) {
     syst_.setWindow(height, width, texture);
 }
 
+const std::vector<std::shared_ptr<Sprite>> Session::getSpriteVec() const{
+    return sprites_;
+}
+
 void Session::handleEvent(SDL_Event& event){
 
        while(SDL_PollEvent(&event)){
@@ -96,13 +100,13 @@ void Session::handleEvent(SDL_Event& event){
             
                 case SDL_KEYUP: {
                     for(std::shared_ptr<Player> player : players_){
-                        player->keyUp(event, max_x_);
+                        player->keyUp(event, syst_.getMaxX());
                     }  
                 }break;
 
                 case SDL_KEYDOWN: {
                     for(std::shared_ptr<Player> player : players_){ 
-                        player->keyDown(event, max_x_);
+                        player->keyDown(event, syst_.getMaxX());
                     }   
                 }break;
 
