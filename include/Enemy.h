@@ -16,8 +16,7 @@ class Enemy : public Sprite, public std::enable_shared_from_this<Enemy> {
     //bool enemyInFront(); // Implement?
 
     protected:
-     // Ctr moved from public to protected
-    Enemy(int x, int y, int height, int width, SDL_Texture* texture) : height(height), Sprite(x, y, height, width, texture) {}
+    Enemy(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x, y, height, width, texture), height(height) {}
 
     private:
     static int shoot;
@@ -29,7 +28,6 @@ class Enemy : public Sprite, public std::enable_shared_from_this<Enemy> {
     bool goRight_{true};
     bool goDown_{false};
     void moveEnemy();
-    
    
 };
 

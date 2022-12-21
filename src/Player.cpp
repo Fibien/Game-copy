@@ -2,15 +2,17 @@
 // Ta bort iostream efter testning
 #include <iostream>
 #include <memory>
+#include <vector>
+#include <string>
 #include "Player.h"
 #include "Bullet.h"
+#include "HUD.h"
 
 Player::~Player(){
     // Behöver något destrueras i Player?
 }
 
 std::shared_ptr<Player> Player::getInstance(int x, int y, int h, int w, SDL_Texture* texture) {
-    //return std::make_shared<Player>(x, y, h, w, texture);
     return std::shared_ptr<Player>(new Player(x, y, h, w, texture));
 }
 
@@ -38,7 +40,7 @@ void Player::keyUp(SDL_Event& eve, int x) {
                                                                                                                                                                      
         SDL_Texture* tex = ses.getTexture("Bullet");
         int xMovement = this->getRect().x + (this->getRect().w/2);
-        int yMovement = this->getRect().y - 10;   
+        int yMovement = this->getRect().y - 20;   
         int width = 10;
         int height = 20;
         bool friendly = true;
@@ -50,4 +52,19 @@ void Player::keyUp(SDL_Event& eve, int x) {
 void Player::tick(){
 
 } 
+
+void Player::getCollisionBehaviour() {
+    // Minska liv
+    std::cout << "Minska liv" << std::endl;
+    std::shared_ptr<HUD> hud = ses.getHUD();
+    hud->decreaseLife();
+    if(hud->getRemaningLives() == 0) {
+        ses.endRun(false);
+    }
+    
+    std::string lives = "Lives: " + std::to_string(hud->getRemaningLives());
+    hud->setText(lives, 40, "./images/fonts/consola.ttf");
+    
+
+}
 

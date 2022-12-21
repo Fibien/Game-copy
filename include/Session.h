@@ -11,6 +11,7 @@
 #include "HUD.h"
 #include "System.h"
 #include "Player.h"
+#include <SDL2/SDL_ttf.h>
 
 class Session{
 
@@ -19,18 +20,26 @@ class Session{
 
     public:
     Session(int, int, std::string, std::string);
+    ~Session();
     void run();
     void addSprite(const std::shared_ptr<Sprite>&); 
     void addPlayer(std::shared_ptr<Player>);
-    void addHUD(HUD*);
+    void addHUD(std::shared_ptr<HUD>);
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
     SDL_Renderer* getRenderer(); 
     void remove(const std::shared_ptr<Sprite>&); 
     void setWindow(int, int, SDL_Texture*);
     int getMaxY() {return syst_.getMaxY();}
+    void setVictoryMessage(std::string, std::string, int);
+    void setDefeatMessage(std::string, std::string, int);
+    void defeat();
+    void victory();
+    void endRun(bool);
+
     const std::vector<std::shared_ptr<Sprite>> getSpriteVec() const;
-    
+    std::shared_ptr<HUD> getHUD();    
+
     // Victory func
     // defeat func
     // collision  
@@ -51,15 +60,28 @@ class Session{
     void displayElements();
     int determineDelay(Uint32);
     void createDelay(int);
+    void setTextMessage(std::string, std::string, int);
+
     System syst_;
     bool is_session_running_;
-   
-    //int max_y_, max_x_;
+    bool victory_ = false;
+    std::string victory_path;
+    std::string victory_messsage;
+    int victory_text_size;
+    std::string defeat_path;
+    std::string defeat_messsage;
+    int defeat_text_size;
+
+    SDL_Texture* test;
+    SDL_Rect testRect;
+
+
+    TTF_Font* font_;
 
     std::vector<std::shared_ptr<Sprite> > sprites_;
     // Använda unique_ptr på player ??
     std::vector<std::shared_ptr<Player> > players_;
-    std::vector<HUD*> HUDs_;
+    std::shared_ptr<HUD> hud_;
     std::vector<std::shared_ptr<Sprite> > added_;
     std::vector<std::shared_ptr<Sprite> > removed_;
 

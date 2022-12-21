@@ -12,7 +12,6 @@ Bullet::~Bullet() {
 }
 
 std::shared_ptr<Bullet> Bullet::getInstance(int x, int y, int height, int width, SDL_Texture* texture, bool shotFromPlayer){
-    //return std::make_shared<Bullet>(x,y,height,width,texture);
     return std::shared_ptr<Bullet>(new Bullet(x,y,height,width,texture, shotFromPlayer)); 
 }
 
