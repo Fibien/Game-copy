@@ -124,3 +124,15 @@ int main(int argc, char** argv){
     return 0;
 }
 
+// TODO 
+/*
+
+* Skapa victory condition, när alla enemies är döda (kanske score?)
+* Implementera score
+* Implementera När enemies når botten forlorar man
+* Testa o spela med två spelare (Player har egna kontroller)
+* Städa koden
+* Flytta över Fontdelen från ScoreBoard till HUD
+
+
+*/
