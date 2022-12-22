@@ -22,7 +22,6 @@ System::System(int x, int y, std::string title, std::string path_) {
 }
 
 System::~System(){
-    std::cerr << "System destructor" << std::endl;
     destroyTextures();
     SDL_DestroyWindow(window_);
     SDL_DestroyRenderer(ren_);
@@ -46,7 +45,9 @@ SDL_Texture* System::getTexture(std::string key) {
     return textures_.at(key);
 }
 
-void System::setWindow(int x, int y, SDL_Texture* txt_){
+void System::setWindow(int x, int y, std::string key){
+    
+    SDL_Texture* txt_ = getTexture(key);
     this->txt_ = txt_;
     max_x_ = x;
     max_y_ = y;

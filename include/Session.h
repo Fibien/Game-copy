@@ -31,7 +31,7 @@ class Session{
     SDL_Texture* getTexture(std::string);
     SDL_Renderer* getRenderer(); 
     void remove(const std::shared_ptr<Sprite>&); 
-    void setWindow(int, int, SDL_Texture*);
+    void setWindow(int, int, std::string);
     const std::vector<std::shared_ptr<Sprite>> getSpriteVec() const;
     int getMaxY() {return syst_.getMaxY();}
     std::shared_ptr<HUD> getHUD() const;    
@@ -74,7 +74,7 @@ class Session{
     std::string defeat_messsage_ = "YOU LOST!";
     int defeat_text_size_ = 40;
     int shoot_timer_ = 0;
-    int shoot_timer_limit = 20;
+    int shoot_timer_limit = 30;
 
     TTF_Font* font_;
 

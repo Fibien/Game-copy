@@ -26,42 +26,35 @@ Session::~Session() {
 
 void Session::run(){
 
-    std::cerr << "Starting run" << std::endl;
-
     is_session_running_ = true;
     Uint32 tick_interval = 1000 / FPS;
 
     while(is_session_running_){
 
-        std::cerr << "Run while running" << std::endl;
-
         Uint32 next_tick = SDL_GetTicks64() + tick_interval;
         SDL_Event event;
 
         handleEvent(event);
-        std::cerr << "clearrReneder" << std::endl;
+
         clearRenderer();
-std::cerr << "handleCreatedElements();" << std::endl;
+
         handleCreatedElements();
-     std::cerr << "handleTick();" << std::endl;
+
         handleTick();
-std::cerr << "handleCollision();" << std::endl;
+
         handleCollision();
-   std::cerr << "removeElement();" << std::endl; 
+
         removeElements();
 
         renderBackground();
-        std::cerr << "Draw on elements" << std::endl;
+
         invokeDrawOnElements();
-      std::cerr << "Displayelements" << std::endl;
+        
         displayElements();
-    std::cerr << "After draw" << std::endl;
+
         int delay = determineDelay(next_tick);
         createDelay(delay);
-
     } // End outer while
-
-    std::cerr << "Run while ended" << std::endl;
 
     if(!userEndedSession_){
         victory_ ? victory() : defeat();
@@ -102,8 +95,8 @@ void Session::remove(const std::shared_ptr<Sprite> &sprite) {
     removed_.push_back(std::move(sprite));
 }
 
-void Session::setWindow(int height_, int width, SDL_Texture* texture) {
-    syst_.setWindow(height_, width, texture);
+void Session::setWindow(int height_, int width, std::string key) {
+    syst_.setWindow(height_, width, key);
 }
 
 const std::vector<std::shared_ptr<Sprite>> Session::getSpriteVec() const{
@@ -224,8 +217,7 @@ void Session::clearRenderer(){
 void Session::handleTick(){
     for (SpritePtr sprite : sprites_) {
         sprite->tick();
-    }
-    std::cerr << "after sprites" << std::endl;        
+    }   
     player_->tick();
 }
 
@@ -259,7 +251,7 @@ void Session::handleCollision(){
         } // End of inner for loop
     } // End of outer for loop
 
-          for(LongUInt i = 0; i < sprites_.size(); i++){
+    for(LongUInt i = 0; i < sprites_.size(); i++){
         SpritePtr first = sprites_.at(i);
         bool collided = first->hasCollided(&first->getRect(), &player_->getRect());
         
@@ -328,7 +320,6 @@ void Session::invokeDrawOnElements(){
     for (SpritePtr sprite : sprites_) {
         sprite->draw();
     }
-    std::cerr << "Sprites is drawn" << std::endl;
     player_->draw();
     hud_->draw();
 }

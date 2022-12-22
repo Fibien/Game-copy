@@ -15,7 +15,7 @@ class System{
     
     void createTexture(std::initializer_list<input_pair> pairs);
     SDL_Texture* getTexture(std::string);
-    void setWindow(int, int, SDL_Texture*);
+    void setWindow(int, int, std::string);
     
     int getMaxX() {return max_x_;}
     int getMaxY() {return max_y_;}

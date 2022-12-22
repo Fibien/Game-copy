@@ -18,19 +18,7 @@ bool Sprite::hasCollided(const SDL_Rect* firstRect, const SDL_Rect* secondRect) 
 }
 
 void Sprite::draw() { 
-    
-    if(ses.getRenderer() == nullptr){
-        std::cerr << "Rendered null" << std::endl;
-    }
-
-    if(getTexture() == nullptr){
-        std::cerr << "Texture null" << std::endl;
-    }
-
-
-
     SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
-    std::cerr << "Player-drqaw/(" << std::endl;
 }
 
 bool Sprite::operator==(const Sprite& other){

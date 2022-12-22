@@ -1,19 +1,19 @@
-// #ifndef GAME_H
-// #define GAME_H
+#ifndef GAME_H
+#define GAME_H
 
-// class Game {
+class Game {
 
-//     public: 
-//     static Game* getInstance();
-//     void run();
-//     void createTextures();
-//     void setWindow();
-//     void setEndGameMessages();
-//     void addEntities();
+    public: 
+    static Game* getInstance();
+    void run();
+    void createTextures();
+    void setWindow();
+    void setEndGameMessages();
+    void addEntities();
 
-//     protected:
-//     Game() {}    
+    protected:
+    Game() {}    
 
-// };
+};
 
-// #endif
+#endif
