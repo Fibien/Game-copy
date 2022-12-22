@@ -1,26 +1,29 @@
-﻿// Ta bort iostream efter testning
-#include <iostream>
+﻿#include <iostream>
 #include <SDL2/SDL_image.h> 
 #include "System.h"
 #include "Constants.h"
 
 using namespace constants;
+typedef std::pair<std::string, SDL_Texture*> texture_pair;
 
-System::System(int x, int y, std::string title, std::string path) {
+System::System(int x, int y, std::string title, std::string path_) {
     max_x_ = x;
     max_y_ = y;
 
     SDL_Init(SDL_INIT_EVERYTHING);
     window_ = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, 
     SDL_WINDOWPOS_CENTERED, x, y, 0);
+    
     ren_ = SDL_CreateRenderer(window_, -1,0);
-    txt_ = IMG_LoadTexture(ren_, (gResPath + path).c_str());
+    txt_ = IMG_LoadTexture(ren_, (gResPath + path_).c_str());
+    
     SDL_RenderCopy(ren_, txt_, NULL, NULL);
     SDL_RenderPresent(ren_);
 }
 
 System::~System(){
-    std::cout << "System destructor invoked" << std::endl;
+    std::cerr << "System destructor" << std::endl;
+    destroyTextures();
     SDL_DestroyWindow(window_);
     SDL_DestroyRenderer(ren_);
     SDL_Quit();
@@ -29,11 +32,11 @@ System::~System(){
 void System::createTexture(std::initializer_list<input_pair> pairs){
 
     for(input_pair pair : pairs){
-    
         SDL_Texture* image = IMG_LoadTexture(ren_, (constants::gResPath + pair.second).c_str());
-        if(image == nullptr){
-            std::cout << "Image was not found" << std::endl;
-        }else{
+        
+        if (image == nullptr){
+            std::cerr << "Image was not found" << std::endl;
+        } else{
             textures_.insert(std::make_pair(pair.first, image));
         }
     }
@@ -53,3 +56,13 @@ void System::setWindow(int x, int y, SDL_Texture* txt_){
     SDL_RenderPresent(ren_);
 }
 
+// Destroy the textures for all sprites
+void System::destroyTextures(){
+    for(texture_pair pair : textures_){
+
+        SDL_Texture* txt = pair.second;
+        pair.second = nullptr;
+        SDL_DestroyTexture(txt);
+
+    }
+}

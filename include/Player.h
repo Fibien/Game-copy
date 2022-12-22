@@ -6,18 +6,15 @@
 class Player : public Sprite{
 
     public:
-    static std::shared_ptr<Player> getInstance(int, int, int, int, SDL_Texture*);
-    ~Player();
-    void draw();
-    void keyDown(SDL_Event&, int);
-    void keyUp(SDL_Event&, int);
+    virtual ~Player() {}
+    virtual void moveRight() = 0;
+    virtual void moveLeft() = 0;
+    virtual void shoot_() = 0;  
     void tick();
     void getCollisionBehaviour();
    
-
     protected:
-    Player(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x, y, height, width, texture) {}
-
+    Player(int x, int y, int height, int width, std::string background) : Sprite(x, y, height, width, background) {}
 };
 
 #endif

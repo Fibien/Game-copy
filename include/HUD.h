@@ -1,47 +1,54 @@
 ﻿#ifndef HUD_H
 #define HUD_H
 
+#include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include <string>
+#include "Session.h"
+
+class Session;
 
 class HUD{
 
     public:
     virtual ~HUD();
-    virtual void draw() = 0;
+    virtual void draw();
     virtual void update() = 0;
     virtual void increasePoints() = 0;
     virtual void decreaseLife() = 0;
     void setText(std::string, int, std::string);
-    void setPointsPerHit(int);
-    void setLives(int);
-    void setDamageTakenPerHit(int);
-    int getRemaningLives() {return lives;}
-    int getTotalPoints() {return totalPoints;}
+    int getRemaningLives() const {return lives_;}
+    int getTotalPoints() const {return total_points_;}
    
-    
     SDL_Texture* getTexture();
     SDL_Rect& getRect();
     
     protected:
-    HUD(int x, int y, int w, int h, SDL_Texture* txt, std::string path, int size, int points = 10, int lives = 3, int multiplier = 1) : rect_{x, y, w, h}, path(path), size(size), pointsPerHit(points), lives(lives), multiplier(multiplier), textTexture(txt) { };
-    SDL_Rect rect_;
-    std::string path;
-    int size;
-    int pointsPerHit;
-    int lives;
-    int multiplier;
-    int totalPoints{0};
-    std::string text_;
-    
+    HUD(int, int, int, int, std::string, std::string, int, int, int, int);
+    void addToTotalPoints(int);
+    int getPointsPerHit() {return pointsPerHit_;}    
+    void subtractFromLives(int);
+    int getDamageMultiplier() {return multiplier_;}
+    int getSize() {return size_;}
+    std::string getPath() {return path_;}
+
     private:
     HUD(const HUD&) = delete;
     const HUD& operator=(const HUD&) = delete;
-    SDL_Texture* textTexture;
-    TTF_Font* font;
-    
 
+    SDL_Rect rect_;
+    SDL_Texture* text_texture_;
+    TTF_Font* font_;
+
+    std::string path_;
+    int size_;
+    int pointsPerHit_;
+    int lives_;
+    int multiplier_;
+    int total_points_{0};
+   
+
+    
 };
 
 #endif

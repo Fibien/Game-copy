@@ -2,54 +2,52 @@
 #include "Session.h"
 #include "Constants.h"
 
-void HUD::setPointsPerHit(int points){
+HUD::HUD(int x, int y, int w, int h, std::string background, std::string path_, int size, int points = 10, 
+    int lives_ = 3, int multiplier_ = 1) : rect_{x, y, w, h}, path_(path_), size_(size), 
+    pointsPerHit_(points), lives_(lives_), multiplier_(multiplier_) 
+    { text_texture_ = ses.getTexture(background); };
 
+HUD::~HUD(){
+    SDL_DestroyTexture(text_texture_);
+    TTF_CloseFont(font_);
+    TTF_Quit();
 }
 
-void setLives(int lives){
-
+void HUD::draw() {
+    SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
 }
 
+void HUD::setText(std::string text, int size, std::string path_) {
+    if (TTF_Init() == -1) {
+        exit(-1);
+    }
 
-void setDamageTakenPerHit(int multiplier){
+    font_ = TTF_OpenFont((constants::gResPath + path_).c_str(), size);
+    SDL_Color color = {77,255,64};
+    
+    SDL_Surface* textSurf = TTF_RenderText_Solid(font_, text.c_str(), color);
+    text_texture_ = SDL_CreateTextureFromSurface(ses.getRenderer(), textSurf);
 
+    SDL_Rect& rect_ = getRect();
+    rect_ = {rect_.x, rect_.y, textSurf->w, textSurf->h};
+
+    SDL_RenderCopy(ses.getRenderer(), text_texture_, NULL, &rect_);
+    SDL_FreeSurface(textSurf);
 }
 
 SDL_Texture* HUD::getTexture() {
-    return textTexture;
+    return text_texture_;
 }
 
 SDL_Rect& HUD::getRect() {
     return rect_;
 }
 
-HUD::~HUD(){
-    SDL_DestroyTexture(textTexture);
-    TTF_CloseFont(font);
-    TTF_Quit();
+void HUD::addToTotalPoints(int points){
+    total_points_ += points;
 }
 
-void HUD::setText(std::string text, int size, std::string path) {
-    if (TTF_Init() == -1) {
-        exit(-1);
-    }
-    // std::cout << "Open font " << std::endl;
-    font = TTF_OpenFont((constants::gResPath + path).c_str(), size);
-    // std::cout << "Nullfont" << (font == nullptr) << std::endl;
-    // std::cout << "Open color " << std::endl;
-    SDL_Color color = {77,255,64};
-    
-    // std::cout << "Open textsurf " << std::endl;
-    SDL_Surface* textSurf = TTF_RenderText_Solid(font, text.c_str(), color);
-    // std::cout << "CreateTexture " << std::endl;
-    textTexture = SDL_CreateTextureFromSurface(ses.getRenderer(), textSurf);
-    // std::cout << "set Rect " << std::endl;
-    SDL_Rect& rect_ = getRect();
-    rect_ = {rect_.x, rect_.y, textSurf->w, textSurf->h};
-    //rect_ = {x, y, textSurf->w, textSurf->h};
-    // std::cout << "Render copy " << std::endl;
-    SDL_RenderCopy(ses.getRenderer(), textTexture, NULL, &rect_);
-    // std::cout << "Freesurface " << std::endl;
-    SDL_FreeSurface(textSurf);
-    // std::cout << "End of method " << std::endl;
+void HUD::subtractFromLives(int damage){
+    lives_ -= damage;
 }
+

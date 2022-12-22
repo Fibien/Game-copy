@@ -7,28 +7,26 @@
 class Enemy : public Sprite, public std::enable_shared_from_this<Enemy> {
 
     public:
-    static std::shared_ptr<Enemy> getInstance(int, int, int, int, SDL_Texture*);
-    ~Enemy();
+    static std::shared_ptr<Enemy> getInstance(int, int, int, int, std::string);
+    ~Enemy() {}
     void tick();
-    void draw();
     void getCollisionBehaviour();
-    //void reachGoal(); // Implement?
-    //bool enemyInFront(); // Implement?
 
     protected:
-    Enemy(int x, int y, int height, int width, SDL_Texture* texture) : Sprite(x, y, height, width, texture), height(height) {}
+    Enemy(int, int, int, int, std::string);
 
     private:
-    static int shoot;
-    static int rng;
+    void moveEnemy();
+    const bool canEnemyShoot();
+    void shoot();
+    static int shoot_;
+    static int rng_;
     int move_count_{0};
     int move_tickCount_{0};
     int fire_tickCount{1};
-    int height;
+    int height_;
     bool goRight_{true};
     bool goDown_{false};
-    void moveEnemy();
-   
 };
 
 

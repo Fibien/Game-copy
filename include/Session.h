@@ -8,10 +8,12 @@
 
 #include <vector>
 #include <memory>
+#include <SDL2/SDL_ttf.h>
 #include "HUD.h"
 #include "System.h"
 #include "Player.h"
-#include <SDL2/SDL_ttf.h>
+
+class HUD;
 
 class Session{
 
@@ -30,55 +32,57 @@ class Session{
     SDL_Renderer* getRenderer(); 
     void remove(const std::shared_ptr<Sprite>&); 
     void setWindow(int, int, SDL_Texture*);
+    const std::vector<std::shared_ptr<Sprite>> getSpriteVec() const;
     int getMaxY() {return syst_.getMaxY();}
-    void setVictoryMessage(std::string, std::string, int);
+    std::shared_ptr<HUD> getHUD() const;    
     void setDefeatMessage(std::string, std::string, int);
+    void setVictoryMessage(std::string, std::string, int);
+
+    // setEndGamePath bool flags if the game was won or lost
+    void winTheGame();
+    void looseTheGame();
+    
+    private:
     void defeat();
     void victory();
-    void endRun(bool);
-
-    const std::vector<std::shared_ptr<Sprite>> getSpriteVec() const;
-    std::shared_ptr<HUD> getHUD();    
-
-    private:
+    void setEndGamePath(bool);
+    void setTextMessage(std::string, std::string, int);
+    void displayPostScreen(std::string, std::string, int);
     void handleEvent(SDL_Event&);
     void clearRenderer();
     void handleTick();
     void handleCreatedElements();
     void handleCollision();
+    void handleSpriteCollision();
+    void handlePlayerCollision();
     void removeElements();
     void renderBackground();
     void invokeDrawOnElements();
     void displayElements();
     int determineDelay(Uint32);
     void createDelay(int);
-    void setTextMessage(std::string, std::string, int);
-
+   
     System syst_;
     bool is_session_running_;
+    
     bool victory_ = false;
-    bool userEndedSession = false;
-    std::string victory_path = "./images/fonts/consola.ttf";
-    std::string victory_messsage = "YOU WON!";
-    int victory_text_size = 40;
-    std::string defeat_path = "./images/fonts/consola.ttf";
-    std::string defeat_messsage = "YOU LOST!";
-    int defeat_text_size = 40;
-
-    // Ta bort??
-    SDL_Texture* test;
-    SDL_Rect testRect;
-
+    bool userEndedSession_ = false;
+    std::string victory_path_ = "./images/fonts/consola.ttf";
+    std::string victory_messsage_ = "YOU WON!";
+    int victory_text_size_ = 40;
+    std::string defeat_path_ = "./images/fonts/consola.ttf";
+    std::string defeat_messsage_ = "YOU LOST!";
+    int defeat_text_size_ = 40;
+    int shoot_timer_ = 0;
+    int shoot_timer_limit = 20;
 
     TTF_Font* font_;
 
     std::vector<std::shared_ptr<Sprite> > sprites_;
-    // Använda unique_ptr på player ??
-    std::vector<std::shared_ptr<Player> > players_;
+    std::shared_ptr<Player> player_;
     std::shared_ptr<HUD> hud_;
     std::vector<std::shared_ptr<Sprite> > added_;
     std::vector<std::shared_ptr<Sprite> > removed_;
-
 };
 
 extern Session ses;

@@ -1,12 +1,9 @@
-﻿
-// Ta bort iostream efter testning
-#include <iostream>
-#include <memory>
-#include <SDL2/SDL_ttf.h>
+﻿#include <memory>
+#include <stdexcept>
+#include <SDL2/SDL_image.h> 
 #include "Session.h"
 #include "Constants.h"
-
-#include <SDL2/SDL_image.h> 
+#include <iostream>
 
 #define FPS 60
 
@@ -17,54 +14,58 @@ typedef std::shared_ptr<HUD> HUDptr;
 typedef std::vector<std::shared_ptr<Sprite>>::iterator SpriteVectorIterator;
 typedef long long unsigned int LongUInt;
 
+
 using namespace constants;
 
-Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y, title, path){}
+Session::Session(int x, int y, std::string title, std::string path_) : syst_(x, y, title, path_){}
 
 Session::~Session() {
+    TTF_CloseFont(font_);
+    TTF_Quit();
 }
 
 void Session::run(){
+
+    std::cerr << "Starting run" << std::endl;
 
     is_session_running_ = true;
     Uint32 tick_interval = 1000 / FPS;
 
     while(is_session_running_){
 
+        std::cerr << "Run while running" << std::endl;
+
         Uint32 next_tick = SDL_GetTicks64() + tick_interval;
         SDL_Event event;
 
         handleEvent(event);
-
+        std::cerr << "clearrReneder" << std::endl;
         clearRenderer();
-
+std::cerr << "handleCreatedElements();" << std::endl;
         handleCreatedElements();
-// swithced places 
+     std::cerr << "handleTick();" << std::endl;
         handleTick();
-
+std::cerr << "handleCollision();" << std::endl;
         handleCollision();
-
+   std::cerr << "removeElement();" << std::endl; 
         removeElements();
 
         renderBackground();
-
+        std::cerr << "Draw on elements" << std::endl;
         invokeDrawOnElements();
-
+      std::cerr << "Displayelements" << std::endl;
         displayElements();
-
+    std::cerr << "After draw" << std::endl;
         int delay = determineDelay(next_tick);
         createDelay(delay);
 
     } // End outer while
-    if(!userEndedSession){
+
+    std::cerr << "Run while ended" << std::endl;
+
+    if(!userEndedSession_){
         victory_ ? victory() : defeat();
     }
-
-    // Göra funktion för nedstägning av programmet 
-    TTF_CloseFont(font_);
-    TTF_Quit();
-    SDL_Quit();    
-
 } // End run
 
 void Session::addSprite(const std::shared_ptr<Sprite>& sprite) {
@@ -75,7 +76,7 @@ void Session::addPlayer(std::shared_ptr<Player> player){
     if(is_session_running_){
         throw std::invalid_argument("Players can't be added during runtime");
     }
-    players_.push_back(player);
+    player_ = player;
 }
 
 void Session::addHUD(std::shared_ptr<HUD> hud){
@@ -89,7 +90,7 @@ void Session::createTexture(std::initializer_list<input_pair> pairs){
     syst_.createTexture(pairs);
 }
 
-SDL_Texture* Session::getTexture(std::string key){
+SDL_Texture* Session::getTexture(std::string key) {
     return syst_.getTexture(key);
 }
 
@@ -101,113 +102,119 @@ void Session::remove(const std::shared_ptr<Sprite> &sprite) {
     removed_.push_back(std::move(sprite));
 }
 
-void Session::setWindow(int height, int width, SDL_Texture* texture) {
-    syst_.setWindow(height, width, texture);
-}
-
-void Session::setDefeatMessage(std::string message, std::string path, int size){
-     defeat_messsage = message;
-     defeat_path = path;
-     defeat_text_size = size;
-}
-
-void Session::setVictoryMessage(std::string message, std::string path, int size){
-    victory_messsage = message;
-    victory_path = path;
-    victory_text_size = size;
-}
-
-void Session::defeat(){
-    clearRenderer();
-
-    setTextMessage(defeat_messsage, defeat_path, defeat_text_size);
-
-    bool endGame = false;
-    while(!endGame){
-    
-        SDL_Event event;    
-        while(SDL_PollEvent(&event)){
-            switch(event.type){
-                case SDL_QUIT: endGame = true; break;
-            }
-        }
-    }
-}
-
-void Session::victory(){
-    clearRenderer();
-
-    setTextMessage(victory_messsage, victory_path, victory_text_size);
-
-    bool endGame = false;
-    while(!endGame){
-    
-        SDL_Event event;    
-        while(SDL_PollEvent(&event)){
-            switch(event.type){
-                case SDL_QUIT: endGame = true; break;
-            }
-        }
-    }
-}
-
-void Session::endRun(bool victory){
-
-    is_session_running_ = false;
-    this->victory_ = victory;
-
-}
-
-void Session::setTextMessage(std::string message, std::string path, int size) {
-    if (TTF_Init() == -1) {
-        exit(-1);
-    }
-   
-    font_ = TTF_OpenFont((constants::gResPath + path).c_str(), size);
-
-    SDL_Color color = {77,255,64};
-    
-    SDL_Surface* textSurf = TTF_RenderText_Solid(font_, message.c_str(), color);
-
-    SDL_Texture* txt = SDL_CreateTextureFromSurface(ses.getRenderer(), textSurf);
-    SDL_Rect rect_ = {(syst_.getMaxX() - textSurf->w) / 2, (syst_.getMaxY() - textSurf->w) / 2, textSurf->w, textSurf->h};
-
-    SDL_RenderCopy(ses.getRenderer(), txt, NULL, &rect_);
-    SDL_RenderPresent(ses.getRenderer());
-    SDL_FreeSurface(textSurf);
- 
+void Session::setWindow(int height_, int width, SDL_Texture* texture) {
+    syst_.setWindow(height_, width, texture);
 }
 
 const std::vector<std::shared_ptr<Sprite>> Session::getSpriteVec() const{
     return sprites_;
 }
 
-std::shared_ptr<HUD> Session::getHUD() {
+std::shared_ptr<HUD> Session::getHUD() const {
     return hud_;
+}
+
+void Session::setDefeatMessage(std::string message, std::string path_, int size){
+    defeat_messsage_ = message;
+    defeat_path_ = path_;
+    defeat_text_size_ = size;
+}
+
+void Session::setVictoryMessage(std::string message, std::string path_, int size){
+    victory_messsage_ = message;
+    victory_path_ = path_;
+    victory_text_size_ = size;
+}
+
+void Session::winTheGame(){
+    setEndGamePath(true);
+}
+
+void Session::looseTheGame(){
+    setEndGamePath(false);
+}
+
+void Session::defeat(){
+    displayPostScreen(defeat_messsage_, defeat_path_, defeat_text_size_);
+}
+
+void Session::victory(){
+    displayPostScreen(victory_messsage_, victory_path_, victory_text_size_);
+}
+
+void Session::setEndGamePath(bool victory){
+    is_session_running_ = false;
+    this->victory_ = victory;
+}
+
+void Session::setTextMessage(std::string message, std::string path_, int size) {
+    if (TTF_Init() == -1) {
+        exit(-1);
+    }
+   
+    font_ = TTF_OpenFont((constants::gResPath + path_).c_str(), size);
+    SDL_Color color = {77,255,64};
+
+    SDL_Surface* textSurf = TTF_RenderText_Solid(font_, message.c_str(), color);
+    SDL_Texture* txt = SDL_CreateTextureFromSurface(ses.getRenderer(), textSurf);
+    SDL_Rect rect_ = {(syst_.getMaxX() - textSurf->w) / 2, (syst_.getMaxY() - textSurf->w) / 2, textSurf->w, textSurf->h};
+
+    SDL_RenderCopy(ses.getRenderer(), txt, NULL, &rect_);
+    SDL_RenderPresent(ses.getRenderer());
+    SDL_FreeSurface(textSurf);
+}
+
+void Session::displayPostScreen(std::string message, std::string path_, int text_size){
+
+    clearRenderer();
+    setTextMessage(message, path_, text_size);
+
+    bool endGame = false;
+    while(!endGame){
+    
+        SDL_Event event;    
+        while(SDL_PollEvent(&event)){
+            switch(event.type){
+                case SDL_QUIT: endGame = true; break;
+            }
+        }
+    }
+
 }
 
 void Session::handleEvent(SDL_Event& event){
 
-       while(SDL_PollEvent(&event)){
+    while(SDL_PollEvent(&event)){
             
-            switch(event.type){
+        switch(event.type){
             
-                case SDL_KEYUP: {
-                    for(std::shared_ptr<Player> player : players_){
-                        player->keyUp(event, syst_.getMaxX());
-                    }  
-                }break;
+            case SDL_KEYUP: {
+  
+                if(event.key.keysym.sym == SDLK_SPACE){
+                    if (shoot_timer_ > shoot_timer_limit) {
+                        player_->shoot_();
+                        shoot_timer_ = 0;
+                    }
+                }       
 
-                case SDL_KEYDOWN: {
-                    for(std::shared_ptr<Player> player : players_){ 
-                        player->keyDown(event, syst_.getMaxX());
-                    }   
-                }break;
+            }break;
 
-                case SDL_QUIT: is_session_running_ = false, userEndedSession = true; break;
-        
-            } // End of switch
-        } // End of inner while loop
+            case SDL_KEYDOWN: {
+
+
+                if(event.key.keysym.sym == SDLK_RIGHT){
+                    player_->moveRight();
+                }
+                
+                if(event.key.keysym.sym == SDLK_LEFT){
+                    player_->moveLeft();
+                }
+            }break;
+
+            case SDL_QUIT: is_session_running_ = false, userEndedSession_ = true; break;
+        } // End of switch
+    } // End of while loop
+    shoot_timer_++;
 }
 
 void Session::clearRenderer(){
@@ -218,10 +225,8 @@ void Session::handleTick(){
     for (SpritePtr sprite : sprites_) {
         sprite->tick();
     }
-        
-    for (auto player : players_) {
-        player->tick();
-    }
+    std::cerr << "after sprites" << std::endl;        
+    player_->tick();
 }
 
 void Session::handleCreatedElements(){
@@ -232,7 +237,10 @@ void Session::handleCreatedElements(){
 }
 
 void Session::handleCollision(){
-
+    // handleSpriteCollision();
+    // handlePlayerCollision();
+// If there exist only one sprite then no
+    // collision can occur
     if(sprites_.size() <= 1){
         return;
     }
@@ -251,34 +259,64 @@ void Session::handleCollision(){
         } // End of inner for loop
     } // End of outer for loop
 
-    for(LongUInt i = 0; i < sprites_.size(); i++){
-        for(LongUInt j = 0; j < players_.size(); j++){
+          for(LongUInt i = 0; i < sprites_.size(); i++){
+        SpritePtr first = sprites_.at(i);
+        bool collided = first->hasCollided(&first->getRect(), &player_->getRect());
         
-            SpritePtr first = sprites_.at(i);
-            SpritePtr second = players_.at(j);
+        if (collided) {
+            first->getCollisionBehaviour();
+            player_->getCollisionBehaviour();
+        }
+    }  
 
+}
+
+void Session::handleSpriteCollision(){
+
+    // If there exist only one sprite then no
+    // collision can occur
+    if(sprites_.size() <= 1){
+        return;
+    }
+
+    for(LongUInt i = 0; i < sprites_.size() - 1; i++){
+        for(LongUInt j = (i + 1); j < sprites_.size(); j++){
+            SpritePtr first = sprites_.at(i);
+            SpritePtr second = sprites_.at(j);
+                    
             bool collided = first->hasCollided(&first->getRect(), &second->getRect());
             if (collided) {
                 first->getCollisionBehaviour();
                 second->getCollisionBehaviour();
             }
+                   
+        } // End of inner for loop
+    } // End of outer for loop
+}
+
+void Session::handlePlayerCollision(){
+
+      for(LongUInt i = 0; i < sprites_.size(); i++){
+        SpritePtr first = sprites_.at(i);
+        bool collided = first->hasCollided(&first->getRect(), &player_->getRect());
+        
+        if (collided) {
+            first->getCollisionBehaviour();
+            player_->getCollisionBehaviour();
         }
-    }       
+    }   
 }
 
 void Session::removeElements(){
 
-     for (SpritePtr sprite : removed_) {
-            for(SpriteVectorIterator i = sprites_.begin(); i != sprites_.end();){
-                if(*i == sprite){
-                    i = sprites_.erase(i);
-                }
-                else{
-                    i++;
-                }
-            }
-        }
-        removed_.clear();
+    for (SpritePtr sprite : removed_) {
+        for(SpriteVectorIterator i = sprites_.begin(); i != sprites_.end();){
+
+            *i == sprite ? i = sprites_.erase(i) : i++;    
+        
+        } // inner for
+    } // outher for
+    removed_.clear();
 }
 
 void Session::renderBackground(){
@@ -286,33 +324,29 @@ void Session::renderBackground(){
 }
 
 void Session::invokeDrawOnElements(){
-
+    
     for (SpritePtr sprite : sprites_) {
-            sprite->draw();
+        sprite->draw();
     }
-
-    for(PlayerPtr player : players_){
-            player->draw();
-    }
-
+    std::cerr << "Sprites is drawn" << std::endl;
+    player_->draw();
     hud_->draw();
-
 }
 
 void Session::displayElements(){
-     SDL_RenderPresent(syst_.getRenderer());
+    SDL_RenderPresent(syst_.getRenderer());
 }
 
 int Session::determineDelay(Uint32 next_tick){
-      return next_tick - SDL_GetTicks();
-       
+    return next_tick - SDL_GetTicks();   
 }
 
 void Session::createDelay(int delay){
-        if (delay > 0) {
-            SDL_Delay(delay);
-        }
+    if (delay > 0) {
+        SDL_Delay(delay);
+    }
 }
+
 
 
 Session ses(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_TITLE, DEFAULT_BACKGROUND);
