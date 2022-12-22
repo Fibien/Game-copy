@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <memory>
 
 // Testing
 #include <iostream>
@@ -69,6 +70,11 @@ void Enemy::draw() {
 
 void Enemy::getCollisionBehaviour(){
     ses.remove(shared_from_this());
+    std::shared_ptr<HUD> hud = ses.getHUD();
+
+    hud->increasePoints();
+    hud->update();
+
 }
 
 void Enemy::moveEnemy(){
@@ -100,6 +106,13 @@ void Enemy::moveEnemy(){
         rect.x -= 40;
         move_count_++;
     }
+    
+    if(this->getRect().y + this->getRect().h > ses.getMaxY()) {
+     
+        ses.endRun(false);
+       
+    }
+
 }
 
 // static variable

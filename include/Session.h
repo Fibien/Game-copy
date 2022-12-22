@@ -40,14 +40,6 @@ class Session{
     const std::vector<std::shared_ptr<Sprite>> getSpriteVec() const;
     std::shared_ptr<HUD> getHUD();    
 
-    // Victory func
-    // defeat func
-    // collision  
-
-    // void remove(Sprite&);
-    // Add victory msgs
-    // Add defeat msgs
-
     private:
     void handleEvent(SDL_Event&);
     void clearRenderer();
@@ -65,13 +57,15 @@ class Session{
     System syst_;
     bool is_session_running_;
     bool victory_ = false;
-    std::string victory_path;
-    std::string victory_messsage;
-    int victory_text_size;
-    std::string defeat_path;
-    std::string defeat_messsage;
-    int defeat_text_size;
+    bool userEndedSession = false;
+    std::string victory_path = "./images/fonts/consola.ttf";
+    std::string victory_messsage = "YOU WON!";
+    int victory_text_size = 40;
+    std::string defeat_path = "./images/fonts/consola.ttf";
+    std::string defeat_messsage = "YOU LOST!";
+    int defeat_text_size = 40;
 
+    // Ta bort??
     SDL_Texture* test;
     SDL_Rect testRect;
 

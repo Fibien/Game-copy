@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "HUD.h"
+#include "Enemy.h"
 
 Player::~Player(){
     // Behöver något destrueras i Player?
@@ -21,7 +22,6 @@ void Player::draw() {
 }
 
 void Player::keyDown(SDL_Event& eve, int max_x_){
-
     int move = 5;
     int lowerBoundry = move;
     int higherBoundry = (max_x_-(this->getRect().w+move));
@@ -37,7 +37,7 @@ void Player::keyDown(SDL_Event& eve, int max_x_){
 
 void Player::keyUp(SDL_Event& eve, int x) {  
     if(eve.key.keysym.sym == SDLK_SPACE) {
-                                                                                                                                                                     
+                                                                            
         SDL_Texture* tex = ses.getTexture("Bullet");
         int xMovement = this->getRect().x + (this->getRect().w/2);
         int yMovement = this->getRect().y - 20;   
@@ -50,7 +50,18 @@ void Player::keyUp(SDL_Event& eve, int x) {
 }
 
 void Player::tick(){
+    std::vector<std::shared_ptr<Sprite> > sprites = ses.getSpriteVec();
+    bool noMoreEnemies = true;
+    for (auto sprite : sprites) {
+        
+        if (std::dynamic_pointer_cast<Enemy>(sprite)) {
+            noMoreEnemies = false;
+        }
+    }
 
+    if(noMoreEnemies){
+        ses.endRun(true);
+    }
 } 
 
 void Player::getCollisionBehaviour() {
@@ -58,13 +69,11 @@ void Player::getCollisionBehaviour() {
     std::cout << "Minska liv" << std::endl;
     std::shared_ptr<HUD> hud = ses.getHUD();
     hud->decreaseLife();
+    
     if(hud->getRemaningLives() == 0) {
         ses.endRun(false);
     }
-    
-    std::string lives = "Lives: " + std::to_string(hud->getRemaningLives());
-    hud->setText(lives, 40, "./images/fonts/consola.ttf");
-    
 
+    hud->update();
 }
 

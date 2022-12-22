@@ -22,11 +22,7 @@ using namespace constants;
 Session::Session(int x, int y, std::string title, std::string path) : syst_(x, y, title, path){}
 
 Session::~Session() {
-    TTF_CloseFont(font_);
-    TTF_Quit();
 }
-
-
 
 void Session::run(){
 
@@ -42,9 +38,9 @@ void Session::run(){
 
         clearRenderer();
 
-        handleTick();
-
         handleCreatedElements();
+// swithced places 
+        handleTick();
 
         handleCollision();
 
@@ -60,14 +56,14 @@ void Session::run(){
         createDelay(delay);
 
     } // End outer while
+    if(!userEndedSession){
+        victory_ ? victory() : defeat();
+    }
 
-    victory_ ? victory() : defeat();
-
-    // if(victory_){
-    //     victory();
-    // }else{
-    //     defeat();
-    // }
+    // Göra funktion för nedstägning av programmet 
+    TTF_CloseFont(font_);
+    TTF_Quit();
+    SDL_Quit();    
 
 } // End run
 
@@ -168,22 +164,13 @@ void Session::setTextMessage(std::string message, std::string path, int size) {
     }
    
     font_ = TTF_OpenFont((constants::gResPath + path).c_str(), size);
-    
-    // std::cout << "Font null? " << (font_ == nullptr) << std::endl;
 
     SDL_Color color = {77,255,64};
     
     SDL_Surface* textSurf = TTF_RenderText_Solid(font_, message.c_str(), color);
-    // std::cout << "Surface made: " << (textSurf == nullptr) << std::endl;
-    SDL_Texture* txt = SDL_CreateTextureFromSurface(ses.getRenderer(), textSurf);
-    //SDL_Texture* txt= SDL_CreateTextureFromSurface(ses.getRenderer(), textSurf);
-    // std::cout << "Texture made: " << (txt == nullptr) << std::endl;
-  
-    // testRect = {syst_.getMaxX() / 2, syst_.getMaxY() / 2, textSurf->w, textSurf->h};
-    SDL_Rect rect_ = {(syst_.getMaxX() - textSurf->w) / 2, (syst_.getMaxY() - textSurf->w) / 2, textSurf->w, textSurf->h};
-   // SDL_Rect rect_ = {rect_.x, rect_.y, textSurf->w, textSurf->h};
 
-    // SDL_RenderCopy(ses.getRenderer(), test, NULL, &testRect);
+    SDL_Texture* txt = SDL_CreateTextureFromSurface(ses.getRenderer(), textSurf);
+    SDL_Rect rect_ = {(syst_.getMaxX() - textSurf->w) / 2, (syst_.getMaxY() - textSurf->w) / 2, textSurf->w, textSurf->h};
 
     SDL_RenderCopy(ses.getRenderer(), txt, NULL, &rect_);
     SDL_RenderPresent(ses.getRenderer());
@@ -217,7 +204,7 @@ void Session::handleEvent(SDL_Event& event){
                     }   
                 }break;
 
-                case SDL_QUIT: is_session_running_ = false; break;
+                case SDL_QUIT: is_session_running_ = false, userEndedSession = true; break;
         
             } // End of switch
         } // End of inner while loop
@@ -229,8 +216,12 @@ void Session::clearRenderer(){
 
 void Session::handleTick(){
     for (SpritePtr sprite : sprites_) {
-            sprite->tick();
-        }
+        sprite->tick();
+    }
+        
+    for (auto player : players_) {
+        player->tick();
+    }
 }
 
 void Session::handleCreatedElements(){
