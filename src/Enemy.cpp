@@ -64,10 +64,6 @@ void Enemy::tick() {
     } 
 }
 
-void Enemy::draw() {
-    SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
-}
-
 void Enemy::getCollisionBehaviour(){
     ses.remove(shared_from_this());
     std::shared_ptr<HUD> hud = ses.getHUD();

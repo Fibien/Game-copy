@@ -10,7 +10,7 @@ class Sprite{
     public:
     
     virtual ~Sprite() {std::cout << "Sprite destructor" << std::endl;};
-    virtual void draw() = 0;
+    void draw();
     virtual void tick() = 0;
     virtual void getCollisionBehaviour() {  }
     SDL_Rect& getRect() { return rect_; }

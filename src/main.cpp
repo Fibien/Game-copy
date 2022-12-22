@@ -1,5 +1,4 @@
-﻿
-#include "Session.h"
+﻿#include "Session.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "ScoreBoard.h"
@@ -134,7 +133,6 @@ int main(int argc, char** argv){
 // TODO 
 /*
 
-* Testa o spela med två spelare (Player har egna kontroller)
 * Städa koden
 
 

@@ -15,10 +15,6 @@ std::shared_ptr<Bullet> Bullet::getInstance(int x, int y, int height, int width,
     return std::shared_ptr<Bullet>(new Bullet(x,y,height,width,texture, shotFromPlayer)); 
 }
 
-void Bullet::draw() {
-    SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
-}
-
 void Bullet::getCollisionBehaviour() {
     ses.remove(shared_from_this());
 }

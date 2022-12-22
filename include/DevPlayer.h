@@ -1,0 +1,8 @@
+﻿
+class DevPlayer : public Player{
+
+
+
+
+
+};

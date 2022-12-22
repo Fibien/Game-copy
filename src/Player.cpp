@@ -17,9 +17,9 @@ std::shared_ptr<Player> Player::getInstance(int x, int y, int h, int w, SDL_Text
     return std::shared_ptr<Player>(new Player(x, y, h, w, texture));
 }
 
-void Player::draw() { 
-    SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
-}
+// void Player::draw() { 
+//     SDL_RenderCopy(ses.getRenderer(), getTexture(), NULL, &getRect());
+// }
 
 void Player::keyDown(SDL_Event& eve, int max_x_){
     int move = 5;
