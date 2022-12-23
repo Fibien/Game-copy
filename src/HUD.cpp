@@ -51,4 +51,3 @@ void HUD::addToTotalPoints(int points){
 void HUD::subtractFromLives(int damage){
     lives_ -= damage;
 }
-
