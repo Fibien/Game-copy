@@ -35,13 +35,17 @@ class Session{
     const std::vector<std::shared_ptr<Sprite>> getSpriteVec() const;
     int getMaxY() {return syst_.getMaxY();}
     std::shared_ptr<HUD> getHUD() const;    
+    void decreaseLife();
+    int getRemaingLives();
+    void updateHUD();
+    
     void setDefeatMessage(std::string, std::string, int);
     void setVictoryMessage(std::string, std::string, int);
 
     // setEndGamePath bool flags if the game was won or lost
     void winTheGame();
     void looseTheGame();
-    
+
     private:
     void defeat();
     void victory();
@@ -61,6 +65,7 @@ class Session{
     void displayElements();
     int determineDelay(Uint32);
     void createDelay(int);
+   
    
     System syst_;
     bool is_session_running_;

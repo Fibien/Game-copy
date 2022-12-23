@@ -2,10 +2,18 @@
 #include "ScoreBoard.h"
 #include "Session.h"
 
+ScoreBoard::ScoreBoard(int x, int y, int h, int w, std::string background, std::string path, int size, 
+    int pointsPerHit, int lives, int multiplier) : HUD(x,y,h,w,background, path, size, pointsPerHit, 
+    lives, multiplier){
+    
+    // Updates the font on the screen.
+    update();
+    } 
+
 std::shared_ptr<HUD> ScoreBoard::getInstance(int x, int y, int h, int w, std::string background, 
-    std::string path_, int size, int pointsPerHit, int lives_, int multiplier_) {
+    std::string path_, int size, int pointsPerHit, int lives_, int damage_multiplier_) {
     return std::shared_ptr<HUD>(new ScoreBoard(x,y,h,w,background, path_, size, pointsPerHit, 
-    lives_, multiplier_));
+    lives_, damage_multiplier_));
 }
 
 void ScoreBoard::increasePoints(){

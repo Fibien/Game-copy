@@ -1,5 +1,4 @@
-﻿#include <memory>
-#include <stdexcept>
+﻿#include <stdexcept>
 #include <SDL2/SDL_image.h> 
 #include "Session.h"
 #include "Constants.h"
@@ -107,6 +106,18 @@ std::shared_ptr<HUD> Session::getHUD() const {
     return hud_;
 }
 
+void Session::decreaseLife(){
+    hud_->decreaseLife();
+}
+
+int Session::getRemaingLives(){
+    return hud_->getRemaningLives();
+}
+
+void Session::updateHUD(){
+    hud_->update();
+}
+
 void Session::setDefeatMessage(std::string message, std::string path_, int size){
     defeat_messsage_ = message;
     defeat_path_ = path_;
@@ -207,6 +218,7 @@ void Session::handleEvent(SDL_Event& event){
             case SDL_QUIT: is_session_running_ = false, userEndedSession_ = true; break;
         } // End of switch
     } // End of while loop
+
     shoot_timer_++;
 }
 
@@ -229,38 +241,8 @@ void Session::handleCreatedElements(){
 }
 
 void Session::handleCollision(){
-    // handleSpriteCollision();
-    // handlePlayerCollision();
-// If there exist only one sprite then no
-    // collision can occur
-    if(sprites_.size() <= 1){
-        return;
-    }
-
-    for(LongUInt i = 0; i < sprites_.size() - 1; i++){
-        for(LongUInt j = (i + 1); j < sprites_.size(); j++){
-            SpritePtr first = sprites_.at(i);
-            SpritePtr second = sprites_.at(j);
-                    
-            bool collided = first->hasCollided(&first->getRect(), &second->getRect());
-            if (collided) {
-                first->getCollisionBehaviour();
-                second->getCollisionBehaviour();
-            }
-                   
-        } // End of inner for loop
-    } // End of outer for loop
-
-    for(LongUInt i = 0; i < sprites_.size(); i++){
-        SpritePtr first = sprites_.at(i);
-        bool collided = first->hasCollided(&first->getRect(), &player_->getRect());
-        
-        if (collided) {
-            first->getCollisionBehaviour();
-            player_->getCollisionBehaviour();
-        }
-    }  
-
+    handleSpriteCollision();
+    handlePlayerCollision();
 }
 
 void Session::handleSpriteCollision(){
@@ -306,8 +288,8 @@ void Session::removeElements(){
 
             *i == sprite ? i = sprites_.erase(i) : i++;    
         
-        } // inner for
-    } // outher for
+        } // End of inner for loop
+    } // End of outer for loop
     removed_.clear();
 }
 
@@ -337,7 +319,5 @@ void Session::createDelay(int delay){
         SDL_Delay(delay);
     }
 }
-
-
 
 Session ses(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_TITLE, DEFAULT_BACKGROUND);

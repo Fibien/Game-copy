@@ -18,6 +18,9 @@ class Enemy : public Sprite, public std::enable_shared_from_this<Enemy> {
     private:
     void moveEnemy();
     const bool canEnemyShoot();
+    const bool isNextRowClear();
+    const bool isTwoRowsAwayClear();
+    const bool canShoot(int);
     void shoot();
     static int shoot_;
     static int rng_;

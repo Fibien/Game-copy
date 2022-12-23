@@ -1,5 +1,5 @@
-#include "Game.h"
 #include <string>
+#include "Game.h"
 #include "Session.h"
 #include "Enemy.h"
 #include "ScoreBoard.h"
@@ -26,32 +26,18 @@ void Game::setWindow(){
 }
 
 void Game::setEndGameMessages() {
-    ses.setDefeatMessage("RIP", "./images/fonts/consola.ttf", 40);
-    ses.setVictoryMessage("VICTORY!", "./images/fonts/consola.ttf", 40);
+    ses.setDefeatMessage("RIP", "./fonts/consola.ttf", 40);
+    ses.setVictoryMessage("VICTORY!", "./fonts/consola.ttf", 40);
 }
 
 void Game::addEntities(){
     // create HUD
-    std::shared_ptr<HUD> hud = ScoreBoard::getInstance(20, 20, 100, 80, "ScoreBoard", "./images/fonts/consola.ttf", 40, 1, 2, 1);
+    std::shared_ptr<HUD> hud = ScoreBoard::getInstance(20, 20, 100, 80, "ScoreBoard", "./fonts/consola.ttf", 40, 1, 2, 1);
     
-    std::string lives_ = "2";
-    std::string points = "0";
-    std::string space = std::string(26, ' ');
-    std::string hud_text = "Lives: " + lives_ + space + "Score: " + points;
-    
-    hud->setText(hud_text, 40, "./images/fonts/consola.ttf");
-
     // // Add HUD
     ses.addHUD(hud);
 
-    // Possitions used for placing the enemies on the screen.
-    int ewidth = 40;
-    int eheight = 46;
-    int xstartpos = 80;
-    int xoffset = 100;
-    int yoffset = 56;
-    int ystartpos = 100;
-
+    // Movespeed and max and min pos x for the player
     int move = 5;
     int lower = move;
     int player_width = 100;
@@ -63,6 +49,14 @@ void Game::addEntities(){
 
     // Add Player
     ses.addPlayer(ptr);
+
+    // Positions used for placing the enemies on the screen.
+    int ewidth = 40;
+    int eheight = 46;
+    int xstartpos = 80;
+    int xoffset = 100;
+    int yoffset = 56;
+    int ystartpos = 100;
 
     // Create Enemies
     // First row

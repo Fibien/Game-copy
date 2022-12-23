@@ -1,9 +1,7 @@
 #ifndef SCOREBOARD_H
 #define SCOREBOARD_H
 
-#include <string>
 #include <memory>
-#include <SDL2/SDL.h>
 #include "HUD.h"
 
 class ScoreBoard : public HUD {
@@ -19,8 +17,7 @@ class ScoreBoard : public HUD {
 
     protected:
     ScoreBoard(int x, int y, int h, int w, std::string background, std::string path, int size, 
-    int pointsPerHit, int lives, int multiplier) : HUD(x,y,h,w,background, path, size, pointsPerHit, 
-    lives, multiplier){} 
+    int pointsPerHit, int lives, int multiplier);
 
     private:
     SDL_Rect rect_;

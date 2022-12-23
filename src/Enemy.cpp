@@ -68,26 +68,48 @@ void Enemy::moveEnemy(){
 
 const bool Enemy::canEnemyShoot(){
     
-    std::vector<std::shared_ptr<Sprite>> sprites_ = ses.getSpriteVec();
-    bool canShoot = true;
+    return isNextRowClear() && isTwoRowsAwayClear();
+}
+
+const bool Enemy::isNextRowClear(){
+
     int offset = 10;
+    // The y coordinate to the enemy on the next row
+    int y = getRect().y + getRect().h + offset;
+
+    return canShoot(y);
+}
+
+
+const bool Enemy::isTwoRowsAwayClear(){
+
+    int offset = 10;
+    // The y coordinate to the enemy two rows away
+    int y = getRect().y + (getRect().h + offset) * 2;
+
+    return canShoot(y);
+}
+
+const bool Enemy::canShoot(int y_coordinate){
+
+    std::vector<std::shared_ptr<Sprite>> sprites_ = ses.getSpriteVec();
+    bool clear = true;
 
     for(LongUInt i = 0; i < sprites_.size(); i++){
 
         int x = getRect().x;
-        int y = getRect().y + getRect().h + offset;
-
+        int y = y_coordinate;
         std::shared_ptr<Sprite> sprite2 = sprites_.at(i);
         int xTwo = sprite2->getRect().x;
         int yTwo = sprite2->getRect().y;    
         
         if(x == xTwo && y == yTwo){
-            canShoot = false;
+            clear = false;
         }
     
     } // for  
 
-    return canShoot;
+    return clear;
 }
 
 void Enemy::shoot(){

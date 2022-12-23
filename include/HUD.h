@@ -16,7 +16,6 @@ class HUD{
     virtual void update() = 0;
     virtual void increasePoints() = 0;
     virtual void decreaseLife() = 0;
-    void setText(std::string, int, std::string);
     int getRemaningLives() const {return lives_;}
     int getTotalPoints() const {return total_points_;}
    
@@ -24,11 +23,12 @@ class HUD{
     SDL_Rect& getRect();
     
     protected:
+    void setText(std::string, int, std::string);
     HUD(int, int, int, int, std::string, std::string, int, int, int, int);
     void addToTotalPoints(int);
     int getPointsPerHit() {return pointsPerHit_;}    
     void subtractFromLives(int);
-    int getDamageMultiplier() {return multiplier_;}
+    int getDamageMultiplier() {return damage_multiplier_;}
     int getSize() {return size_;}
     std::string getPath() {return path_;}
 
@@ -44,7 +44,7 @@ class HUD{
     int size_;
     int pointsPerHit_;
     int lives_;
-    int multiplier_;
+    int damage_multiplier_;
     int total_points_{0};
    
 

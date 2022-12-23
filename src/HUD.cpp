@@ -3,9 +3,10 @@
 #include "Constants.h"
 
 HUD::HUD(int x, int y, int w, int h, std::string background, std::string path_, int size, int points = 10, 
-    int lives_ = 3, int multiplier_ = 1) : rect_{x, y, w, h}, path_(path_), size_(size), 
-    pointsPerHit_(points), lives_(lives_), multiplier_(multiplier_) 
-    { text_texture_ = ses.getTexture(background); };
+    int lives_ = 3, int damage_multiplier_ = 1) : rect_{x, y, w, h}, path_(path_), size_(size), 
+    pointsPerHit_(points), lives_(lives_), damage_multiplier_(damage_multiplier_) 
+    { text_texture_ = ses.getTexture(background); 
+    };
 
 HUD::~HUD(){
     SDL_DestroyTexture(text_texture_);

@@ -1,6 +1,5 @@
 ﻿#include "Session.h"
 #include "Sprite.h"
-
 #include "iostream"
 
 Sprite::Sprite(int x, int y, int w, int h, std::string background) : rect_{x,y,w,h}  {

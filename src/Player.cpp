@@ -1,11 +1,8 @@
 ﻿#include <memory>
-#include <vector>
 #include <string>
 #include "Player.h"
 #include "Bullet.h"
-#include "HUD.h"
 #include "Enemy.h"
-#include <iostream>
 
 void Player::tick(){
     std::vector<std::shared_ptr<Sprite> > sprites = ses.getSpriteVec();
@@ -24,12 +21,11 @@ void Player::tick(){
 } 
 
 void Player::getCollisionBehaviour() {
-    std::shared_ptr<HUD> hud = ses.getHUD();
-    hud->decreaseLife();
-    
-    if(hud->getRemaningLives() == 0) {
-        std::cerr << "Game ending" << std::endl;
+  
+    ses.decreaseLife();
+
+    if(ses.getRemaingLives() == 0){
         ses.looseTheGame();
     }
-    hud->update();
+    ses.updateHUD();
 }
