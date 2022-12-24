@@ -102,10 +102,10 @@ void Game::addEntities(){
     ses.addSprite(eptr8);
 
     // row 2
-    // ses.addSprite(eptr2e1);
-    // ses.addSprite(eptr2e2);
-    // ses.addSprite(eptr2e3);
-    // ses.addSprite(eptr2e4);
+    ses.addSprite(eptr2e1);
+    ses.addSprite(eptr2e2);
+    ses.addSprite(eptr2e3);
+    ses.addSprite(eptr2e4);
     ses.addSprite(eptr2e5);
     ses.addSprite(eptr2e6);
     ses.addSprite(eptr2e7);
